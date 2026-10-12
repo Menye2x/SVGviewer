@@ -1,0 +1,2163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="SVG Area is a local SVG conversion, cleanup, preview, and path inspection workspace.">
+  <title>SVG Area — Vector Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root{color-scheme:dark;--bg:#0a0d17;--panel:#111625;--panel2:#151c2f;--panel3:#0d1220;--line:#28314a;--line2:#36415e;--text:#edf1ff;--muted:#9da8c5;--faint:#697595;--accent:#9986ff;--accent2:#6b54ee;--cyan:#65d7ec;--gold:#ffc96b;--green:#67dfb1;--red:#ff8298;--radius:18px;--shadow:0 20px 60px rgba(0,0,0,.25)}
+    *{box-sizing:border-box}html{min-height:100%;background:var(--bg)}body{margin:0;min-height:100vh;font-family:Manrope,system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(ellipse at 14% -8%,rgba(108,81,231,.19),transparent 36%),radial-gradient(ellipse at 97% 16%,rgba(51,163,190,.09),transparent 28%),var(--bg);color:var(--text);font-size:14px}button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}.shell{max-width:1560px;margin:auto;padding:26px clamp(14px,3vw,42px) 38px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:26px}.brand{display:flex;align-items:center;gap:14px;min-width:0}.brand-mark{width:50px;height:50px;display:grid;place-items:center;border-radius:16px;color:#fff;font-size:23px;background:linear-gradient(145deg,#a18dff,#6750e9);box-shadow:0 10px 30px rgba(115,84,239,.3)}.brand h1{font-size:clamp(23px,3vw,31px);letter-spacing:-1.3px;margin:0;font-weight:800}.brand p{margin:4px 0 0;color:var(--muted);font-size:12px;letter-spacing:.1px}.top-status{display:flex;align-items:center;gap:9px;padding:9px 13px;border:1px solid var(--line);background:rgba(17,22,37,.7);border-radius:999px;color:#c4cce3;font-size:10px;font-weight:800;letter-spacing:1.2px;white-space:nowrap}.status-dot{height:7px;width:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px rgba(103,223,177,.5)}.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin:0 0 20px}.intro h2{font-size:clamp(18px,2vw,24px);letter-spacing:-.7px;margin:0 0 7px}.intro p{margin:0;max-width:680px;color:var(--muted);line-height:1.65;font-size:13px}.tip{display:flex;align-items:center;gap:9px;max-width:320px;color:#c0c9e4;border:1px solid rgba(153,134,255,.24);background:rgba(111,86,222,.08);border-radius:13px;padding:10px 12px;font-size:11px;line-height:1.45}.tip i{color:var(--accent);font-size:15px}.tabs{display:flex;gap:6px;padding:6px;background:rgba(17,22,37,.78);border:1px solid var(--line);border-radius:16px;width:max-content;max-width:100%;margin-bottom:18px}.tab{display:flex;align-items:center;gap:9px;border:0;background:transparent;color:var(--muted);padding:12px 17px;border-radius:11px;font-weight:800;font-size:12px;transition:.2s}.tab i{font-size:14px}.tab.active{color:#fff;background:linear-gradient(110deg,rgba(127,104,255,.29),rgba(98,79,215,.16));box-shadow:inset 0 0 0 1px rgba(153,134,255,.32)}.tab.active i{color:#b6aaff}.workspace{display:none}.workspace.active{display:block;animation:rise .23s ease}@keyframes rise{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}.layout{display:grid;grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr);gap:17px;align-items:stretch}.column{display:flex;flex-direction:column;gap:17px;min-width:0}.panel{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(150deg,rgba(20,26,44,.96),rgba(14,19,32,.96));box-shadow:var(--shadow);overflow:hidden;min-width:0}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:17px 19px;border-bottom:1px solid rgba(54,65,94,.58)}.panel-title{display:flex;align-items:center;gap:10px;min-width:0}.panel-icon{width:33px;height:33px;display:grid;place-items:center;border:1px solid rgba(153,134,255,.23);background:rgba(126,104,255,.1);color:var(--accent);border-radius:10px;flex:0 0 auto}.panel-title h3{margin:0;font-size:13px;font-weight:800;letter-spacing:.05px}.panel-title p{margin:4px 0 0;color:var(--muted);font-size:10px}.eyebrow{font-size:9px;letter-spacing:1.1px;text-transform:uppercase;color:var(--faint);font-weight:800}.panel-body{padding:18px}.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 13px;border-radius:10px;border:1px solid var(--line2);background:#1a2238;color:#e8ecff;font-weight:800;font-size:11px;transition:background .18s,border-color .18s,transform .18s;white-space:nowrap}.button:hover{background:#222d49;border-color:#57658a;transform:translateY(-1px)}.button.primary{border-color:transparent;color:white;background:linear-gradient(110deg,#8771ff,#634be5);box-shadow:0 6px 20px rgba(105,79,231,.2)}.button.primary:hover{background:linear-gradient(110deg,#9886ff,#755ff0)}.button.subtle{background:transparent;border-color:var(--line);color:#c3cbe2}.button.danger{color:#ffb7c4;background:rgba(255,94,124,.08);border-color:rgba(255,130,152,.28)}.button:disabled{opacity:.38;cursor:not-allowed;transform:none}.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.dropzone{position:relative;display:flex;align-items:center;gap:13px;padding:15px;border:1px dashed #4a5376;border-radius:14px;background:rgba(10,14,25,.48);transition:.2s;min-height:86px}.dropzone.dragover{border-color:var(--cyan);background:rgba(101,215,236,.08)}.upload-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:rgba(101,215,236,.1);border:1px solid rgba(101,215,236,.18);color:var(--cyan);font-size:17px;flex:0 0 auto}.drop-copy{min-width:0;flex:1}.drop-copy strong{display:block;font-size:12px;margin-bottom:5px}.drop-copy span{display:block;font-size:10px;color:var(--muted);line-height:1.5}.file-input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}.file-info{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;min-height:20px;color:var(--muted);font-size:10px}.file-info .filename{color:#dbe1f7;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:58%}.divider{height:1px;background:rgba(54,65,94,.52);margin:18px 0}.section-label{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:11px}.section-label h4{font-size:11px;margin:0;font-weight:800}.section-label span{font-size:10px;color:var(--faint)}.purify-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}.check-item{display:flex;gap:9px;align-items:flex-start;padding:11px;border:1px solid rgba(54,65,94,.7);background:rgba(8,12,21,.25);border-radius:11px;min-width:0}.check-item input{margin:2px 0 0;accent-color:var(--accent);flex:0 0 auto}.check-item strong{display:block;font-size:10px;line-height:1.4}.check-item small{display:block;font-size:9px;color:var(--muted);line-height:1.45;margin-top:4px}.setting-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px;border-radius:12px;border:1px solid rgba(54,65,94,.68);background:rgba(8,12,21,.24);margin-top:9px}.setting-main{min-width:0}.setting-title{display:flex;gap:8px;align-items:center;font-size:10px;font-weight:800}.setting-title input{accent-color:var(--accent)}.setting-desc{font-size:9px;color:var(--muted);margin:5px 0 0 23px;line-height:1.5}.slider-line{display:flex;align-items:center;gap:11px;margin:10px 0 0 23px}.slider-line input[type=range]{width:100%;min-width:70px;accent-color:var(--accent)}.range-value{min-width:39px;text-align:center;padding:5px 7px;border-radius:7px;border:1px solid var(--line);background:#0b1020;color:#e8e3ff;font:11px 'DM Mono',monospace}.setting-row input:disabled{opacity:.35}.color-wrap{display:flex;align-items:center;gap:8px}.color-wrap input[type=color]{width:37px;height:34px;padding:3px;border:1px solid var(--line2);border-radius:9px;background:#0b1020;cursor:pointer}.color-hex{font:10px 'DM Mono',monospace;color:#c8d0eb}.controls-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}.hint-line{font-size:9px;line-height:1.5;color:var(--muted);display:flex;gap:7px;align-items:flex-start}.hint-line i{color:var(--cyan);margin-top:1px}.code-head-tools{display:flex;gap:7px;align-items:center}.code-box{display:block;width:100%;min-height:260px;resize:vertical;border:1px solid var(--line);border-radius:12px;background:#090d17;color:#c7d4f3;padding:14px;font:11px/1.65 'DM Mono',ui-monospace,monospace;tab-size:2;white-space:pre;overflow:auto;outline:none}.code-box[readonly]{color:#b8c8eb}.code-box:focus{border-color:#7262dc}.code-footer{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-top:11px}.code-footer .hint-line{max-width:360px}.preview-panel{height:100%;display:flex;flex-direction:column}.preview-panel .panel-body{display:flex;flex-direction:column;flex:1;min-height:0}.preview-stage{position:relative;min-height:340px;height:clamp(340px,42vw,500px);max-height:540px;border:1px solid #303955;border-radius:14px;overflow:hidden;display:grid;place-items:center;background-color:#101522;background-image:linear-gradient(45deg,rgba(128,143,179,.075) 25%,transparent 25%,transparent 75%,rgba(128,143,179,.075) 75%),linear-gradient(45deg,rgba(128,143,179,.075) 25%,transparent 25%,transparent 75%,rgba(128,143,179,.075) 75%);background-position:0 0,9px 9px;background-size:18px 18px}.preview-stage svg{display:block;width:100%;height:100%;max-width:100%;max-height:100%;overflow:visible}.empty-state{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;color:var(--muted);pointer-events:none}.empty-state .empty-art{width:60px;height:60px;border:1px solid #34405e;border-radius:18px;display:grid;place-items:center;color:#9c8cff;background:rgba(104,83,224,.11);font-size:23px;margin-bottom:13px}.empty-state strong{font-size:12px;color:#d5dcf3;margin-bottom:6px}.empty-state span{max-width:240px;font-size:10px;line-height:1.6}.error-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:28px;background:rgba(9,12,22,.88);color:#ffb1bf}.error-state strong{margin:9px 0 5px;font-size:12px}.error-state span{color:#bd9daa;font-size:10px;line-height:1.5;max-width:290px}.preview-meta{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0 0}.counts{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.count-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:rgba(8,12,21,.36);font-size:10px;color:#bfc9e5}.count-pill b{font:700 11px 'DM Mono',monospace;color:#fff}.count-dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}.count-dot.handle{background:var(--cyan)}.toggles{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.toggle{display:flex;align-items:center;gap:6px;color:#c0c9e2;font-size:10px;white-space:nowrap}.toggle input{accent-color:var(--accent)}.legend{display:flex;gap:13px;align-items:center;flex-wrap:wrap;border-top:1px solid rgba(54,65,94,.52);margin-top:14px;padding-top:12px;color:var(--muted);font-size:9px}.legend span{display:flex;align-items:center;gap:6px}.legend-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;border:1px solid #20283e}.legend-dot.start{background:var(--green)}.legend-line{width:16px;border-top:1px dashed var(--cyan)}.legend-dot.handle{background:var(--cyan)}.preview-note{font-size:10px;line-height:1.5;color:var(--muted);margin:12px 0 0;min-height:15px}.preview-note .ok{color:var(--green)}.preview-note .warn{color:var(--gold)}.editor-toolbar{display:flex;gap:7px;flex-wrap:wrap}.editor-box{min-height:360px;height:clamp(360px,44vw,520px)}.mini-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}.mini-kpi{padding:11px;border:1px solid rgba(54,65,94,.66);background:rgba(8,12,21,.27);border-radius:11px;min-width:0}.mini-kpi span{display:block;font-size:9px;color:var(--muted);margin-bottom:6px}.mini-kpi strong{font:700 12px 'DM Mono',monospace;color:#e8edff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}.repair-panel{margin-top:14px;border:1px solid rgba(255,201,107,.3);border-radius:13px;background:rgba(255,201,107,.045);overflow:hidden}.repair-panel[hidden]{display:none}.repair-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid rgba(255,201,107,.17)}.repair-heading{display:flex;align-items:center;gap:9px;min-width:0}.repair-heading .repair-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:9px;color:var(--gold);background:rgba(255,201,107,.1);border:1px solid rgba(255,201,107,.22)}.repair-heading strong{display:block;font-size:11px}.repair-heading small{display:block;margin-top:3px;color:var(--muted);font-size:9px;line-height:1.5}.repair-body{padding:14px}.repair-summary{font-size:10px;color:#d8dfef;line-height:1.6;margin:0 0 12px}.repair-changes{margin:0 0 14px;padding-left:19px;color:#c9d2e8;font-size:10px;line-height:1.65}.repair-changes li+li{margin-top:3px}.repair-comparison{display:grid;grid-template-columns:1fr 1fr;gap:10px}.repair-side{min-width:0}.repair-side label{display:flex;justify-content:space-between;gap:8px;font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-bottom:7px}.repair-side textarea{min-height:180px;height:220px;resize:vertical;width:100%;display:block;background:#090d17;color:#bdcbee;border:1px solid var(--line);border-radius:9px;padding:10px;font:10px/1.6 'DM Mono',ui-monospace,monospace;white-space:pre;overflow:auto}.repair-side.proposed textarea{border-color:rgba(103,223,177,.35);color:#d4f1e7}.repair-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}.repair-footnote{font-size:9px;color:var(--muted);line-height:1.55;max-width:420px}.repair-footnote i{color:var(--gold);margin-right:5px}@media(max-width:760px){.repair-comparison{grid-template-columns:1fr}.repair-side textarea{height:155px;min-height:140px}}.footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:23px;padding-top:16px;border-top:1px solid rgba(54,65,94,.4);color:var(--faint);font-size:10px}.footer b{color:#b8c2e1;font-weight:700}.toast{position:fixed;z-index:1000;bottom:22px;right:22px;max-width:min(420px,calc(100vw - 32px));display:flex;align-items:flex-start;gap:10px;padding:13px 15px;background:#18223a;color:#ecf1ff;border:1px solid #4a5a7e;box-shadow:0 15px 50px rgba(0,0,0,.42);border-radius:12px;font-size:11px;line-height:1.5;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateY(0)}.toast i{margin-top:2px;color:var(--green)}.toast.error i{color:var(--red)}.kbd{font:9px 'DM Mono',monospace;border:1px solid #3a4562;border-radius:5px;padding:3px 5px;color:#c6d0ee}
+    @media(max-width:1020px){.layout{grid-template-columns:1fr}.preview-stage{height:420px}.preview-panel{min-height:0}.intro{align-items:flex-start;flex-direction:column}.tip{max-width:none}}@media(max-width:620px){.shell{padding:17px 12px 27px}.topbar{align-items:flex-start}.top-status{font-size:8px;padding:8px 9px;letter-spacing:.7px}.brand-mark{width:43px;height:43px;border-radius:13px}.brand{gap:10px}.brand p{font-size:10px}.tabs{width:100%}.tab{flex:1;justify-content:center;padding:11px 8px;font-size:10px;gap:6px}.panel-head{padding:14px}.panel-body{padding:13px}.purify-list{grid-template-columns:1fr}.preview-stage{min-height:290px;height:330px}.code-box{min-height:240px}.editor-box{height:390px;min-height:340px}.mini-kpis{grid-template-columns:1fr}.footer{align-items:flex-start;flex-direction:column}.panel-head>.button{font-size:9px;padding:8px}.counts{width:100%}.preview-meta{align-items:flex-start}.setting-row{grid-template-columns:minmax(0,1fr) auto;padding:10px}.code-head-tools .button{padding:8px;font-size:9px}.dropzone{padding:12px}.drop-copy span{font-size:9px}.color-hex{display:none}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+  <style id="svg-area-v2">
+    [hidden]{display:none!important}
+    .code-box{white-space:pre-wrap;overflow-wrap:anywhere;overflow-x:hidden;overflow-y:auto}
+    .repair-side textarea{white-space:pre-wrap;overflow-wrap:anywhere;overflow-x:hidden;overflow-y:auto}
+    .preview-stage{display:block;height:clamp(360px,46vw,580px);max-height:none;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+    .preview-stage.panning{cursor:grabbing}
+    .preview-stage:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px}
+    .svg-host{position:absolute;inset:0}
+    .zoom-bar{position:absolute;z-index:4;top:10px;right:10px;display:flex;align-items:center;gap:2px;padding:4px;border:1px solid var(--line2);border-radius:12px;background:rgba(13,18,32,.88);backdrop-filter:blur(8px);box-shadow:0 8px 24px rgba(0,0,0,.35);cursor:default}
+    .zoom-bar button{width:30px;height:30px;display:grid;place-items:center;border:0;border-radius:8px;background:transparent;color:#d6dcf2;font-size:12px;transition:background .15s}
+    .zoom-bar button:hover{background:rgba(153,134,255,.22);color:#fff}
+    .zoom-level{min-width:46px;text-align:center;font:500 11px 'DM Mono',monospace;color:#e8e3ff}
+    .zoom-sep{width:1px;height:18px;background:var(--line2);margin:0 3px}
+    .stage-hint{position:absolute;z-index:3;left:12px;bottom:10px;font-size:10px;color:#aab4d2;pointer-events:none;background:rgba(13,18,32,.78);padding:5px 9px;border-radius:8px;transition:opacity .4s}
+    .stage-hint.faded{opacity:0}
+    .legend-box{width:14px;height:9px;border:1.5px dashed #ff9f43;border-radius:2px;background:rgba(255,159,67,.12)}
+    .legend-x{color:#ff4f9a;font-size:11px}
+    .measure{margin-top:14px;border:1px solid rgba(54,65,94,.7);border-radius:12px;background:rgba(8,12,21,.3);overflow:hidden}
+    .measure-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid rgba(54,65,94,.55);font-size:10px}
+    .measure-head span{color:var(--faint);font-size:9px}
+    .measure-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;font-size:10px;color:var(--muted)}
+    .measure-row b{color:#ffb86b;margin-right:6px}
+    .measure code,.centroid-list code{font:11px 'DM Mono',monospace;color:#e8edff;overflow-wrap:anywhere}
+    .centroid-list{list-style:none;margin:0;padding:0;max-height:150px;overflow:auto;border-top:1px solid rgba(54,65,94,.45)}
+    .centroid-list li{display:flex;justify-content:space-between;gap:10px;padding:7px 12px;font-size:10px;color:var(--muted)}
+    .centroid-list li+li{border-top:1px solid rgba(54,65,94,.3)}
+    .centroid-list li i{color:#ff4f9a;margin-right:7px}
+    .centroid-list small{color:var(--faint);margin-left:4px}
+    .optimize-card{margin-top:14px;padding:14px;border:1px solid rgba(103,223,177,.26);border-radius:13px;background:rgba(103,223,177,.04)}
+    .optimize-card .section-label{margin-bottom:12px}
+    .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .opt-field{display:flex;flex-direction:column;gap:8px;padding:11px;border:1px solid rgba(54,65,94,.7);background:rgba(8,12,21,.25);border-radius:11px;font-size:10px;font-weight:800;min-width:0}
+    .opt-field b{font:500 10px 'DM Mono',monospace;color:var(--green);margin-left:6px}
+    .opt-field input[type=range]{width:100%;accent-color:var(--accent)}
+    .opt-field select{background:#0b1020;color:#e8ecff;border:1px solid var(--line2);border-radius:8px;padding:7px 9px;font-size:11px}
+    .opt-stats{margin:12px 0 0;font-size:10px;line-height:1.6;color:var(--muted)}
+    @media(max-width:620px){.opt-grid{grid-template-columns:1fr}}
+    .info-dialog{padding:0;border:1px solid var(--line2);border-radius:18px;background:#10162a;color:#e8ecff;width:min(92vw,680px);max-height:86vh;box-shadow:0 30px 90px rgba(0,0,0,.6);overflow:hidden}
+    .info-dialog[open]{display:flex;flex-direction:column}
+    .info-dialog::backdrop{background:rgba(5,8,18,.72);backdrop-filter:blur(4px)}
+    .info-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid rgba(54,65,94,.7)}
+    .info-head h3{margin:0;font-size:14px;display:flex;align-items:center;gap:9px}
+    .info-head h3 i{color:var(--green)}
+    .info-body{padding:16px 20px;overflow:auto;display:flex;flex-direction:column;gap:12px;font-size:12px;line-height:1.65;color:var(--muted)}
+    .info-body p{margin:0}
+    .info-body code{font:11px 'DM Mono',monospace;color:#e8edff}
+    .info-lead{padding:12px 14px;border-radius:12px;background:rgba(103,223,177,.06);border:1px solid rgba(103,223,177,.25)}
+    .info-param{padding:13px 14px;border:1px solid rgba(54,65,94,.7);border-radius:12px;background:rgba(8,12,21,.3);display:flex;flex-direction:column;gap:8px}
+    .info-title{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+    .info-title strong{color:#fff;font-size:13px}
+    .info-title code{color:var(--green);background:rgba(103,223,177,.08);padding:2px 8px;border-radius:999px}
+    .impact{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+    .impact li{display:flex;gap:9px;align-items:baseline}
+    .impact span{flex:0 0 auto;font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px}
+    .impact .up{background:rgba(103,223,177,.14);color:#67dfb1}
+    .impact .down{background:rgba(255,185,90,.14);color:#ffb95a}
+    .info-table{display:flex;flex-direction:column;gap:8px}
+    .info-table>div{display:grid;grid-template-columns:110px 1fr;gap:2px 12px;padding:10px 12px;border-radius:10px;background:rgba(8,12,21,.35);border:1px solid rgba(54,65,94,.55)}
+    .info-table b{color:#fff;grid-row:span 2}
+    .info-table em{font-style:normal;color:var(--faint)}
+    .info-note{padding-top:2px;color:var(--faint)}
+    .info-foot{padding:13px 20px;border-top:1px solid rgba(54,65,94,.7);display:flex;justify-content:flex-end}
+    @media(max-width:620px){.info-table>div{grid-template-columns:1fr}.info-table b{grid-row:auto}}
+    .measure-details>summary{list-style:none;cursor:pointer}
+    .measure-details>summary::-webkit-details-marker{display:none}
+    .measure-details>summary::after{content:'\f078';font-family:'Font Awesome 6 Free';font-weight:900;font-size:9px;color:var(--faint);margin-left:10px;transition:transform .2s}
+    .measure-details[open]>summary::after{transform:rotate(180deg)}
+    .measure-details:not([open])>summary{border-bottom:0}
+    .code-head-tools{display:flex;align-items:center;gap:10px}
+    .icon-btn[aria-expanded=false] i{transform:rotate(-90deg)}
+    .icon-btn i{transition:transform .2s}
+    .el-ov{display:flex;align-items:center;gap:7px;min-height:26px}
+    .el-ctl{display:flex;align-items:center;gap:6px}
+    .el-ctl input[type=color]{width:28px;height:24px;padding:0;border:1px solid var(--line2);border-radius:6px;background:none;cursor:pointer}
+    .el-ctl input[type=number]{width:60px;background:#0b1020;color:#e8ecff;border:1px solid var(--line2);border-radius:6px;padding:4px 6px;font-size:10px}
+    .legend-dot{background:var(--m-node,var(--gold))}
+    .legend-dot.start{background:var(--m-start,var(--green))}
+    .legend-dot.handle{background:var(--m-handle,var(--cyan))}
+    .legend-line{border-top-color:var(--m-hline,var(--cyan))}
+    .legend-box{border-color:var(--m-bounds,#ff9f43)}
+    .legend-box.text{border-color:var(--m-text,#a3e635);border-style:dotted;background:rgba(163,230,53,.12)}
+    .legend-box.bitmap{border-color:var(--m-bitmap,#ff6b6b);background:rgba(255,107,107,.14)}
+    .legend-box.item{border-color:var(--m-boxes,#b69bff);background:rgba(182,155,255,.12)}
+    .legend-x{color:var(--m-centroid,#ff4f9a)}
+    .fold{margin-top:12px;border:1px solid rgba(54,65,94,.7);border-radius:12px;background:rgba(8,12,21,.25);padding:0 12px}
+    .fold>summary{cursor:pointer;list-style:none;padding:11px 0;font-size:11px;font-weight:800;color:#dfe4fa;display:flex;align-items:center;gap:8px}
+    .fold>summary::-webkit-details-marker{display:none}
+    .fold>summary::after{content:'\f078';font-family:'Font Awesome 6 Free';font-weight:900;font-size:9px;margin-left:auto;color:var(--faint);transition:transform .2s}
+    .fold[open]>summary::after{transform:rotate(180deg)}
+    .fold[open]{padding-bottom:12px}
+    .pill{font:500 10px 'DM Mono',monospace;background:rgba(153,134,255,.18);color:#e8e3ff;border-radius:999px;padding:2px 8px}
+    .mk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+    .mk-item{display:flex;align-items:center;gap:9px;font-size:10px;font-weight:700;color:var(--muted);padding:7px 9px;border:1px solid rgba(54,65,94,.6);border-radius:10px;background:rgba(8,12,21,.25)}
+    .mk-item input[type=color],.el-paint input[type=color]{width:28px;height:24px;padding:0;border:1px solid var(--line2);border-radius:6px;background:none;cursor:pointer}
+    .el-list{max-height:340px;overflow:auto;display:flex;flex-direction:column;gap:6px}
+    .el-row{display:grid;grid-template-columns:minmax(90px,1.1fr) repeat(3,auto) 28px;gap:10px;align-items:center;padding:8px 10px;border:1px solid rgba(54,65,94,.55);border-radius:10px;background:rgba(8,12,21,.3);font-size:10px;color:var(--muted)}
+    .el-row:hover{border-color:rgba(182,155,255,.55)}
+    .el-row.edited{border-color:rgba(103,223,177,.55)}
+    .el-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#e8edff;font-family:'DM Mono',monospace}
+    .el-name b{color:#b69bff;margin-right:5px}
+    .el-paint{display:flex;align-items:center;gap:6px}
+    .el-paint input[type=number]{width:56px;background:#0b1020;color:#e8ecff;border:1px solid var(--line2);border-radius:6px;padding:4px 6px;font-size:10px}
+    .mini{display:flex;align-items:center;gap:3px}
+    .icon-btn{width:26px;height:26px;border:1px solid var(--line2);border-radius:7px;background:transparent;color:var(--muted);cursor:pointer}
+    .icon-btn:hover{color:#fff;background:rgba(153,134,255,.2)}
+    @media(max-width:620px){.mk-grid{grid-template-columns:1fr}.el-row{grid-template-columns:1fr 1fr}.el-name{grid-column:1/-1}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><i class="fa-solid fa-bezier-curve"></i></div>
+        <div><h1>SVG Area</h1><p>Convert, clean, preview, and inspect vector paths.</p></div>
+      </div>
+      <div class="top-status"><span class="status-dot"></span> LOCAL WORKSPACE <span style="color:#606b8a">/</span> NO UPLOADS</div>
+    </header>
+
+    <section class="intro">
+      <div><h2>Your SVG, in full view.</h2><p>Move between SVG markup and its visual form, remove editor-specific clutter, tune stroke and fill settings, and inspect paths with zoom, pan, anchors, Bézier handles, boundary boxes, and centroid markers.</p></div>
+      <div class="tip"><i class="fa-solid fa-shield-halved"></i><span>Files are processed in your browser. Active previews are sanitized to remove scripts and unsafe embedded content.</span></div>
+    </section>
+
+    <nav class="tabs" role="tablist" aria-label="SVG conversion modes">
+      <button class="tab active" id="tab-to-code" role="tab" aria-selected="true" aria-controls="pane-to-code"><i class="fa-solid fa-code"></i> SVG to Code</button>
+      <button class="tab" id="tab-to-svg" role="tab" aria-selected="false" aria-controls="pane-to-svg"><i class="fa-solid fa-image"></i> Code to SVG</button>
+    </nav>
+
+    <section class="workspace active" id="pane-to-code" role="tabpanel" aria-labelledby="tab-to-code">
+      <div class="layout">
+        <div class="column">
+          <section class="panel">
+            <div class="panel-head">
+              <div class="panel-title"><div class="panel-icon"><i class="fa-solid fa-file-arrow-up"></i></div><div><h3>Import SVG</h3><p>Start with an SVG file from your device.</p></div></div>
+              <span class="eyebrow">01 / SOURCE</span>
+            </div>
+            <div class="panel-body">
+              <div class="dropzone" id="dropzone">
+                <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                <div class="drop-copy"><strong>Drop an SVG file here</strong><span>or choose a file to extract editable XML markup.</span></div>
+                <button type="button" class="button subtle" id="browse-btn"><i class="fa-solid fa-folder-open"></i> Browse</button>
+                <input class="file-input" type="file" id="svg-file" accept=".svg,image/svg+xml" aria-label="Choose an SVG file">
+              </div>
+              <div class="file-info"><span class="filename" id="source-file-name">No file loaded</span><span id="source-file-meta">SVG · Waiting for input</span></div>
+
+              <div class="divider"></div>
+              <div class="section-label"><h4><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--accent);margin-right:7px"></i>Purify options</h4><span>Applied on request</span></div>
+              <div class="purify-list">
+                <label class="check-item"><input id="purify-meta" type="checkbox" checked><span><strong>Remove app metadata</strong><small>Drop editor headers, named views, comments, and creator notes.</small></span></label>
+                <label class="check-item"><input id="purify-locks" type="checkbox" checked><span><strong>Remove lock attributes</strong><small>Strip protection flags and editor-specific attributes.</small></span></label>
+                <label class="check-item"><input id="purify-data" type="checkbox" checked><span><strong>Remove data attributes</strong><small>Clear custom data-* attributes from elements.</small></span></label>
+                <label class="check-item"><input id="purify-empty" type="checkbox" checked><span><strong>Remove empty groups</strong><small>Clean up empty group containers after removing metadata.</small></span></label>
+              </div>
+
+              <div class="divider"></div>
+              <div class="section-label"><h4><i class="fa-solid fa-sliders" style="color:var(--cyan);margin-right:7px"></i>Appearance overrides</h4><span>Live preview</span></div>
+              <div class="setting-row">
+                <div class="setting-main">
+                  <label class="setting-title" for="override-stroke"><input id="override-stroke" type="checkbox"> Override stroke width</label>
+                  <p class="setting-desc">Set a consistent stroke width for drawable elements that already use a stroke.</p>
+                  <div class="slider-line"><input id="stroke-width" type="range" min="1" max="10" step="1" value="2" disabled aria-label="Stroke width"><span class="range-value" id="stroke-value">2 px</span></div>
+                </div>
+              </div>
+              <div class="setting-row">
+                <div class="setting-main">
+                  <label class="setting-title" for="override-fill"><input id="override-fill" type="checkbox"> Override fill color</label>
+                  <p class="setting-desc">Recolor filled shapes while preserving elements explicitly set to fill="none".</p>
+                </div>
+                <div class="color-wrap"><input type="color" id="fill-color" value="#8872ff" disabled aria-label="Override fill color"><span class="color-hex" id="fill-hex">#8872FF</span></div>
+              </div>
+              <div id="optimize-slot-to-code"></div>
+              <div class="controls-footer">
+                <div class="hint-line"><i class="fa-solid fa-circle-info"></i><span>Changes are rebuilt from the imported source so toggling an override off restores its original values.</span></div>
+                <div class="actions"><button type="button" class="button subtle" id="restore-source"><i class="fa-solid fa-arrow-rotate-left"></i> Restore source</button><button type="button" class="button primary" id="apply-purify"><i class="fa-solid fa-broom"></i> Apply purification</button></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <div class="panel-title"><div class="panel-icon"><i class="fa-solid fa-terminal"></i></div><div><h3>Generated SVG XML</h3><p>Includes an XML version and UTF-8 encoding declaration.</p></div></div>
+              <div class="code-head-tools"><span class="eyebrow">02 / OUTPUT</span><button type="button" class="icon-btn" id="toggle-output" aria-expanded="true" aria-controls="output-body" title="Collapse or expand the generated XML"><i class="fa-solid fa-chevron-down"></i></button></div>
+            </div>
+            <div class="panel-body" id="output-body">
+              <textarea class="code-box" id="code-output" readonly spellcheck="false" aria-label="Generated SVG XML" placeholder="Your SVG XML will appear here after import."></textarea>
+              <div class="code-footer"><div class="hint-line"><i class="fa-solid fa-lock"></i><span>Generated code is read-only here. Use Code to SVG to edit markup and see the result live.</span></div><div class="actions"><button type="button" class="button" id="copy-output" disabled><i class="fa-regular fa-copy"></i> Copy code</button><button type="button" class="button primary" id="download-output" disabled><i class="fa-solid fa-download"></i> Download SVG</button></div></div>
+            </div>
+          </section>
+        </div>
+
+        <div class="column">
+          <section class="panel preview-panel">
+            <div class="panel-head">
+              <div class="panel-title"><div class="panel-icon"><i class="fa-regular fa-eye"></i></div><div><h3>SVG Preview</h3><p>Visualize the processed vector and inspect its paths.</p></div></div>
+              <span class="eyebrow">LIVE CANVAS</span>
+            </div>
+            <div class="panel-body">
+              <div class="preview-stage" id="preview-stage-to-code">
+                <div class="empty-state" id="empty-to-code"><div class="empty-art"><i class="fa-solid fa-vector-square"></i></div><strong>No SVG loaded yet</strong><span>Import an SVG file to preview its artwork, anchors, and Bézier controls.</span></div>
+              </div>
+              <div class="preview-meta">
+                <div class="counts"><span class="count-pill"><span class="count-dot" style="background:var(--green)"></span> Anchors <b id="node-count-to-code">0</b></span><span class="count-pill"><span class="count-dot handle"></span> Bézier handles <b id="handle-count-to-code">0</b></span></div>
+                <div class="toggles"><label class="toggle"><input type="checkbox" id="show-nodes-to-code" checked> Anchor points</label><label class="toggle"><input type="checkbox" id="show-handles-to-code" checked> Bézier handles</label><label class="toggle"><input type="checkbox" id="show-bounds-to-code" checked> Boundary box</label><label class="toggle"><input type="checkbox" id="show-centroids-to-code" checked> Centroids</label><label class="toggle"><input type="checkbox" id="show-elboxes-to-code"> Shape boxes</label><label class="toggle"><input type="checkbox" id="show-texts-to-code" checked> Text</label><label class="toggle"><input type="checkbox" id="show-bitmaps-to-code" checked> Bitmaps</label></div>
+              </div>
+              <div class="legend"><span><i class="legend-dot start"></i> Subpath start</span><span><i class="legend-dot"></i> Anchor point</span><span><i class="legend-line"></i><i class="legend-dot handle"></i> Bézier control</span><span><i class="legend-box"></i> Boundary</span><span><i class="fa-solid fa-xmark legend-x"></i> Centroid</span><span><i class="legend-box item"></i> Shape box</span><span><i class="legend-box text"></i> Text</span><span><i class="legend-box bitmap"></i> Bitmap</span></div>
+              <div id="marker-slot-to-code"></div>
+              <p class="preview-note" id="preview-note-to-code">Anchor analysis appears after an SVG is loaded.</p>
+              <div class="mini-kpis"><div class="mini-kpi"><span>Canvas viewBox</span><strong id="viewbox-to-code">—</strong></div><div class="mini-kpi"><span>Drawable elements</span><strong id="drawables-to-code">0</strong></div><div class="mini-kpi"><span>Security filtering</span><strong id="security-to-code">Ready</strong></div></div>
+              <div class="measure" id="measure-to-code" hidden></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="workspace" id="pane-to-svg" role="tabpanel" aria-labelledby="tab-to-svg" hidden>
+      <div class="layout">
+        <div class="column">
+          <section class="panel">
+            <div class="panel-head">
+              <div class="panel-title"><div class="panel-icon"><i class="fa-solid fa-code"></i></div><div><h3>SVG Code Editor</h3><p>Paste or type SVG code. The preview updates live.</p></div></div>
+              <span class="eyebrow">01 / SOURCE</span>
+            </div>
+            <div class="panel-body">
+              <div class="actions" style="justify-content:space-between;margin-bottom:12px"><div class="editor-toolbar"><button type="button" class="button subtle" id="format-code"><i class="fa-solid fa-align-left"></i> Format XML</button><button type="button" class="button" id="analyze-repair"><i class="fa-solid fa-wand-magic-sparkles"></i> Analyze &amp; Repair</button></div><div class="editor-toolbar"><button type="button" class="button subtle" id="load-sample"><i class="fa-solid fa-flask"></i> Load sample</button><button type="button" class="button danger" id="clear-code"><i class="fa-solid fa-trash-can"></i> Clear</button></div></div>
+              
+              <textarea class="code-box editor-box" id="svg-code-input" spellcheck="false" aria-label="Paste SVG XML here"></textarea>
+              <div class="code-footer"><div class="hint-line"><i class="fa-solid fa-bolt"></i><span>Preview refreshes as you type. If markup is invalid, analyze safe repairs and review every proposed change before applying it.</span></div><span class="eyebrow" id="code-status">LIVE PARSE</span></div>
+              <div id="elstyle-slot-to-svg"></div>
+              <div id="optimize-slot-to-svg"></div>
+              <section class="repair-panel" id="repair-panel" hidden aria-live="polite">
+                <div class="repair-head">
+                  <div class="repair-heading"><span class="repair-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span><div><strong id="repair-title">XML Auto-Repair Proposal</strong><small id="repair-subtitle">Review the proposed markup before applying it.</small></div></div>
+                  <span class="eyebrow" id="repair-count">0 CHANGES</span>
+                </div>
+                <div class="repair-body">
+                  <p class="repair-summary" id="repair-summary"></p>
+                  <ol class="repair-changes" id="repair-changes"></ol>
+                  <div class="repair-comparison">
+                    <div class="repair-side"><label for="repair-before">Original input <span>READ ONLY</span></label><textarea id="repair-before" readonly spellcheck="false" aria-label="Original SVG markup"></textarea></div>
+                    <div class="repair-side proposed"><label for="repair-after">Proposed repair <span>READ ONLY</span></label><textarea id="repair-after" readonly spellcheck="false" aria-label="Proposed repaired SVG markup"></textarea></div>
+                  </div>
+                  <div class="repair-actions"><div class="repair-footnote"><i class="fa-solid fa-triangle-exclamation"></i>Repairs are heuristic. Review the before/after markup; applying a proposal does not guarantee identical rendering for every malformed source.</div><div class="actions"><button type="button" class="button subtle" id="cancel-repair">Dismiss</button><button type="button" class="button primary" id="apply-repair" disabled><i class="fa-solid fa-check"></i> Apply repaired XML</button></div></div>
+                </div>
+              </section>
+            </div>
+          </section>
+        </div>
+        <div class="column">
+          <section class="panel preview-panel">
+            <div class="panel-head">
+              <div class="panel-title"><div class="panel-icon"><i class="fa-solid fa-vector-square"></i></div><div><h3>SVG Render & Export</h3><p>Preview sanitized markup and export it as an SVG file.</p></div></div>
+              <button type="button" class="button primary" id="export-code-svg" disabled><i class="fa-solid fa-download"></i> Export SVG</button>
+            </div>
+            <div class="panel-body">
+              <div class="preview-stage" id="preview-stage-to-svg">
+                <div class="empty-state" id="empty-to-svg" hidden><div class="empty-art"><i class="fa-solid fa-vector-square"></i></div><strong>Nothing to preview</strong><span>Paste SVG XML or load the sample to see the rendered artwork.</span></div>
+                <div class="error-state" id="error-to-svg" hidden><i class="fa-solid fa-triangle-exclamation" style="font-size:23px"></i><strong>SVG could not be parsed</strong><span id="error-message">Check the XML syntax and make sure the root element is &lt;svg&gt;.</span></div>
+              </div>
+              <div class="preview-meta">
+                <div class="counts"><span class="count-pill"><span class="count-dot" style="background:var(--green)"></span> Anchors <b id="node-count-to-svg">0</b></span><span class="count-pill"><span class="count-dot handle"></span> Bézier handles <b id="handle-count-to-svg">0</b></span></div>
+                <div class="toggles"><label class="toggle"><input type="checkbox" id="show-nodes-to-svg" checked> Anchor points</label><label class="toggle"><input type="checkbox" id="show-handles-to-svg" checked> Bézier handles</label><label class="toggle"><input type="checkbox" id="show-bounds-to-svg" checked> Boundary box</label><label class="toggle"><input type="checkbox" id="show-centroids-to-svg" checked> Centroids</label><label class="toggle"><input type="checkbox" id="show-elboxes-to-svg" checked> Shape boxes</label><label class="toggle"><input type="checkbox" id="show-texts-to-svg" checked> Text</label><label class="toggle"><input type="checkbox" id="show-bitmaps-to-svg" checked> Bitmaps</label></div>
+              </div>
+              <div class="legend"><span><i class="legend-dot start"></i> Subpath start</span><span><i class="legend-dot"></i> Anchor point</span><span><i class="legend-line"></i><i class="legend-dot handle"></i> Bézier control</span><span><i class="legend-box"></i> Boundary</span><span><i class="fa-solid fa-xmark legend-x"></i> Centroid</span><span><i class="legend-box item"></i> Shape box</span><span><i class="legend-box text"></i> Text</span><span><i class="legend-box bitmap"></i> Bitmap</span></div>
+              <div id="marker-slot-to-svg"></div>
+              <p class="preview-note" id="preview-note-to-svg">The imported sample demonstrates anchors and curve controls.</p>
+              <div class="mini-kpis"><div class="mini-kpi"><span>Canvas viewBox</span><strong id="viewbox-to-svg">—</strong></div><div class="mini-kpi"><span>Drawable elements</span><strong id="drawables-to-svg">0</strong></div><div class="mini-kpi"><span>Security filtering</span><strong id="security-to-svg">Ready</strong></div></div>
+              <div class="measure" id="measure-to-svg" hidden></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer"><span><b>SVG Area</b> · A compact vector conversion and inspection workspace.</span><span>Made for precise, local SVG workflows.</span></footer>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"><i class="fa-solid fa-circle-check"></i><span id="toast-text">Done.</span></div>
+
+    <dialog id="opt-info-dialog" class="info-dialog" aria-labelledby="opt-info-title">
+    <div class="info-head"><h3 id="opt-info-title"><i class="fa-solid fa-diagram-project"></i> Optimize nodes: parameters &amp; impact</h3><button type="button" class="icon-btn" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="info-body">
+      <p class="info-lead">The optimizer refits every path with fewer Bézier segments. Corners are always kept, and a path is only replaced when the result has fewer segments than the original, so a run never makes a path heavier. Arcs (<code>A</code> commands) are left untouched.</p>
+
+      <section class="info-param"><div class="info-title"><strong>Tolerance</strong><code>0.01–1.00% · default 0.10%</code></div>
+        <p>The maximum distance the new curve may drift from the original outline, measured as a percentage of the canvas (viewBox) diagonal. Shapes with a scale transform are compensated automatically. Example: on a 1000 × 1000 canvas, 0.10% allows about 1.4 units of deviation.</p>
+        <ul class="impact"><li><span class="up">Higher</span> fewer nodes and a smaller file, but fine details, tiny bumps and thin features can flatten or disappear.</li><li><span class="down">Lower</span> nearly lossless, but fewer nodes are removed.</li></ul></section>
+
+      <section class="info-param"><div class="info-title"><strong>Corner angle</strong><code>5–90° · default 30°</code></div>
+        <p>A join that turns sharper than this angle is treated as a corner and always stays a node. Gentler joins are treated as smooth and may be merged into a single curve.</p>
+        <ul class="impact"><li><span class="up">Higher</span> more joins count as smooth, so polygons with many small facets become round curves and node count drops.</li><li><span class="down">Lower</span> slight kinks and chamfers survive, with more nodes. Use 10–15° for technical drawings, 45° or more for noisy auto-traced shapes.</li></ul></section>
+
+      <section class="info-param"><div class="info-title"><strong>Keep extrema nodes</strong><code>on by default</code></div>
+        <p>Places and keeps nodes at the horizontal and vertical extreme points of each curve (leftmost, rightmost, topmost, bottommost).</p>
+        <ul class="impact"><li><span class="up">On</span> handles stay horizontal or vertical there, curves fit more accurately and are easier to edit, and the shape’s true bounds are preserved.</li><li><span class="down">Off</span> allows longer curves between nodes. It can save a few nodes, but extremes may shift slightly.</li></ul></section>
+
+      <section class="info-param"><div class="info-title"><strong>Keep inflection points</strong><code>on by default</code></div>
+        <p>Keeps a node where a curve switches its bend direction, such as the middle of an S-curve.</p>
+        <ul class="impact"><li><span class="up">On</span> S-shaped and wavy outlines keep their character, even at higher tolerance.</li><li><span class="down">Off</span> one curve may span the whole S bend. This saves nodes, but subtle waves can flatten.</li></ul></section>
+
+      <section class="info-param"><div class="info-title"><strong>Simplify polylines</strong><code>on by default</code></div>
+        <p>Thins out the points of <code>&lt;polyline&gt;</code> and <code>&lt;polygon&gt;</code> elements (Douglas–Peucker). They stay polylines; they are not converted to curves. <code>&lt;path&gt;</code> elements are not affected by this option.</p>
+        <ul class="impact"><li><span class="up">On</span> far fewer points on dense polylines.</li><li><span class="down">Risk</span> at high tolerance, corners smaller than the tolerance are cut off.</li></ul></section>
+
+      <section class="info-param"><div class="info-title"><strong>Purify while optimizing</strong><code>on by default</code></div>
+        <p>Removes comments, metadata and editor-specific elements (CorelDRAW, Illustrator, Inkscape and similar), lock and protection attributes, unused namespace declarations and empty <code>&lt;defs&gt;</code>. Groups that hold only one element are unwrapped, and their transform and inheritable styles move onto that element. The XML version and UTF-8 declaration are kept.</p>
+        <ul class="impact"><li><span class="up">On</span> a cleaner, smaller file with simpler structure.</li><li><span class="down">Note</span> layer names and unreferenced group IDs are dropped, so scripts or CSS that target them will stop matching. Groups referenced by <code>use</code>, <code>url(#…)</code> or CSS are never unwrapped.</li></ul></section>
+
+      <section class="info-param"><div class="info-title"><strong>Decimal precision</strong><code>1–6 · default 3</code></div>
+        <p>How many decimals are written for every coordinate in the optimized path data.</p>
+        <ul class="impact"><li><span class="up">Fewer decimals</span> shorter numbers and a smaller file. 1–2 decimals suit canvases of about 500 units or more.</li><li><span class="down">Risk</span> on small canvases (for example 24 × 24 icons), 1–2 decimals can visibly shift points. Keep 3 or more there.</li></ul></section>
+
+      <section class="info-param"><div class="info-title"><strong>Quick presets</strong></div>
+        <div class="info-table" role="table">
+          <div role="row"><b>Light cleanup</b><span>Tolerance 0.03% · Corner 25° · Extrema + Inflection on · 3 decimals</span><em>Near-lossless; fixes over-segmented or auto-traced paths.</em></div>
+          <div role="row"><b>Balanced</b><span>Tolerance 0.10% · Corner 30° · Extrema + Inflection on · 3 decimals</span><em>Default. Good size reduction with no visible change.</em></div>
+          <div role="row"><b>Aggressive</b><span>Tolerance 0.30–0.50% · Corner 45° · Extrema + Inflection off · 2 decimals</span><em>Smallest files for web graphics; check details afterwards.</em></div>
+        </div>
+        <p class="info-note">In SVG to Code the original source is never modified, and the result is shown live in the preview. In Code to SVG the optimized code replaces the editor content, and <b>Undo</b> restores the previous version.</p></section>
+    </div>
+    <div class="info-foot"><button type="button" class="button primary" data-close>Got it</button></div>
+  </dialog>
+  <script>
+  (() => {
+    'use strict';
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    const XML_NS = 'http://www.w3.org/XML/1998/namespace';
+    const XLINK_NS = 'http://www.w3.org/1999/xlink';
+    const SAMPLE = `<svg xmlns="http://www.w3.org/2000/svg" width="420" height="300" viewBox="0 0 420 300" version="1.1">
+  <defs>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#9c8bff"/><stop offset="100%" stop-color="#5a4be3"/></linearGradient>
+  </defs>
+  <rect x="18" y="18" width="384" height="264" rx="24" fill="#141a2b" stroke="#34405f" stroke-width="2"/>
+  <path d="M 78 194 C 78 90 176 70 210 145 S 342 221 344 103 Q 346 68 315 66" fill="none" stroke="url(#glow)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 86 224 Q 128 176 170 224 T 254 224" fill="none" stroke="#64d8ec" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="78" cy="194" r="7" fill="#ffc96b"/><circle cx="315" cy="66" r="7" fill="#ffc96b"/>
+  <text x="30" y="48" font-size="11" fill="#bdc7e5" font-family="sans-serif" letter-spacing="2">VECTOR STUDY / 001</text>
+</svg>`;
+
+    const $ = (id) => document.getElementById(id);
+    const state = {
+      sourceXml: '', sourceName: '', sourceSize: 0, purgeApplied: false,
+      toCodeDoc: null, toSvgDoc: null, toastTimer: null, parseTimer: null,
+      lastToSvgMarkup: '', lastToSvgRemovals: 0, repairProposal: null
+    };
+
+    function toast(message, isError = false) {
+      const box = $('toast');
+      box.classList.toggle('error', isError);
+      $('toast-text').textContent = message;
+      box.querySelector('i').className = isError ? 'fa-solid fa-triangle-exclamation' : 'fa-solid fa-circle-check';
+      box.classList.add('show');
+      clearTimeout(state.toastTimer);
+      state.toastTimer = setTimeout(() => box.classList.remove('show'), 3100);
+    }
+
+    function switchTab(toCode) {
+      $('tab-to-code').classList.toggle('active', toCode);
+      $('tab-to-svg').classList.toggle('active', !toCode);
+      $('tab-to-code').setAttribute('aria-selected', String(toCode));
+      $('tab-to-svg').setAttribute('aria-selected', String(!toCode));
+      $('pane-to-code').classList.toggle('active', toCode);
+      $('pane-to-svg').classList.toggle('active', !toCode);
+      $('pane-to-code').hidden = !toCode;
+      $('pane-to-svg').hidden = toCode;
+    }
+    $('tab-to-code').addEventListener('click', () => switchTab(true));
+    $('tab-to-svg').addEventListener('click', () => switchTab(false));
+
+    function safeLength(value, fallback) {
+      const raw = String(value || '').trim(); if (/%$/.test(raw)) return fallback;
+      const f = {pt:4/3, pc:16, mm:96/25.4, cm:96/2.54, in:96}[(raw.match(/[a-z]+$/i) || [''])[0].toLowerCase()] || 1;
+      const n = Number.parseFloat(raw) * f;
+      return Number.isFinite(n) && n > 0 ? n : fallback;
+    }
+    function normalizeViewBox(root) {
+      if (!root.hasAttribute('xmlns')) root.setAttribute('xmlns', SVG_NS);
+      if (!root.hasAttribute('version')) root.setAttribute('version', '1.1');
+      if (!root.hasAttribute('viewBox')) {
+        let width = safeLength(root.getAttribute('width'), 300);
+        let height = safeLength(root.getAttribute('height'), 150);
+        root.setAttribute('viewBox', `0 0 ${width} ${height}`);
+      }
+    }
+
+    function getXmlParserError(doc) {
+      const root = doc && doc.documentElement;
+      const isParserError = el => String(el && (el.localName || el.nodeName) || '').toLowerCase() === 'parsererror';
+      const detailsFor = el => {
+        const raw = String(el && el.textContent || '').replace(/\s+/g, ' ').trim();
+        const lm = raw.match(/error on line (\d+) at column (\d+):\s*(.*?)(?:\s*Below is a rendering.*)?$/i);
+        const details = lm ? `Line ${lm[1]}, column ${lm[2]}: ${lm[3]}` : raw;
+        return details || 'The XML parser rejected this markup. Check for unclosed tags, invalid characters, or undefined XML entities.';
+      };
+      // Chromium may insert an XHTML <parsererror> inside a partially parsed SVG,
+      // while Firefox exposes it as the document root. Ignore a real SVG element
+      // named parsererror, but catch parser diagnostics in a non-SVG namespace.
+      if (isParserError(root) && root.namespaceURI !== SVG_NS) return detailsFor(root);
+      const candidates = doc ? Array.from(doc.getElementsByTagName('parsererror')) : [];
+      const diagnostic = candidates.find(el => isParserError(el) && el.namespaceURI && el.namespaceURI !== SVG_NS);
+      return diagnostic ? detailsFor(diagnostic) : '';
+    }
+
+    function stripDoctype(text) {
+      const start = text.search(/<!DOCTYPE\b/i);
+      if (start < 0) return text;
+
+      // Find the end of a DOCTYPE without stopping at quoted '>' characters or
+      // the closing angle bracket inside an internal subset.
+      let quote = '', subsetDepth = 0, end = -1;
+      for (let i = start + 9; i < text.length; i++) {
+        const ch = text[i];
+        if (quote) { if (ch === quote) quote = ''; continue; }
+        if (ch === '"' || ch === "'") { quote = ch; continue; }
+        if (ch === '[') { subsetDepth++; continue; }
+        if (ch === ']' && subsetDepth > 0) { subsetDepth--; continue; }
+        if (ch === '>' && subsetDepth === 0) { end = i + 1; break; }
+      }
+      if (end < 0) throw new Error('The SVG contains an unfinished DOCTYPE declaration.');
+
+      const declaration = text.slice(start, end);
+      const entities = new Map([
+        ['ns_svg', SVG_NS], ['ns_xlink', XLINK_NS],
+        ['ns_ai', 'http://ns.adobe.com/AdobeIllustrator/10.0/'],
+        ['ns_sfw', 'http://ns.adobe.com/SaveForWeb/1.0/'],
+        ['ns_flows', 'http://ns.adobe.com/Flows/1.0/']
+      ]);
+      // Keep only simple literal entity declarations. Expanding arbitrary DTD
+      // entities is intentionally avoided to prevent recursive/entity-bomb input.
+      const entityPattern = /<!ENTITY\s+([A-Za-z_:][\w:.-]*)\s+(?:"([^"]*)"|'([^']*)')\s*>/gi;
+      let entityMatch;
+      while ((entityMatch = entityPattern.exec(declaration))) {
+        const value = entityMatch[2] ?? entityMatch[3] ?? '';
+        if (/^[A-Za-z0-9:/._#-]+$/.test(value)) entities.set(entityMatch[1], value);
+      }
+
+      let body = text.slice(0, start) + text.slice(end);
+      for (const [name, value] of entities) {
+        body = body.replace(new RegExp('&' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ';', 'g'), value);
+      }
+      // These named characters commonly appear in older Illustrator/exported SVGs.
+      const characterEntities = {nbsp:'\u00A0',copy:'\u00A9',reg:'\u00AE',trade:'\u2122',mdash:'\u2014',ndash:'\u2013',hellip:'\u2026',bull:'\u2022',middot:'\u00B7',rsquo:'\u2019',lsquo:'\u2018',rdquo:'\u201D',ldquo:'\u201C',times:'\u00D7',euro:'\u20AC',pound:'\u00A3',yen:'\u00A5',cent:'\u00A2'};
+      body = body.replace(/&([A-Za-z][A-Za-z0-9]+);/g, (whole, name) => Object.prototype.hasOwnProperty.call(characterEntities, name) ? characterEntities[name] : whole);
+      return body;
+    }
+
+    function normalizeSvgInput(source) {
+      let text = String(source == null ? '' : source).replace(/^\uFEFF/, '').trim();
+      // Be forgiving when SVG markup was copied together with Markdown code fences.
+      const fence = text.match(/^```(?:svg|xml|html)?[ \t]*\r?\n([\s\S]*?)\r?\n```[ \t]*$/i);
+      if (fence) text = fence[1].trim();
+      // External DTDs are unnecessary for rendering and are not reliably available
+      // to browser XML parsers. Removing the declaration avoids false parse errors.
+      text = extractSvgBlock(stripDoctype(text).trim());
+      return addMissingPrefixes(text).text.trim();
+    }
+    // Pasted text often has chatter before/after the <svg> block; keep only the block.
+    function extractSvgBlock(text) {
+      const start = findSvgRootStart(text);
+      if (start > 0 && !/^(?:<\?xml[\s\S]*?\?>|<!--[\s\S]*?-->|\s)*$/.test(text.slice(0, start))) text = text.slice(start);
+      const end = text.toLowerCase().lastIndexOf('</svg>');
+      if (end >= 0 && /\S/.test(text.slice(end + 6).replace(/<!--[\s\S]*?-->/g, ''))) text = text.slice(0, end + 6);
+      return text;
+    }
+    // Unbound prefixes (xlink:href without xmlns:xlink, inkscape:*, sodipodi:*) are a classic cause of "undefined prefix" parse errors.
+    const KNOWN_PREFIXES = {xlink:XLINK_NS, inkscape:'http://www.inkscape.org/namespaces/inkscape', sodipodi:'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd', dc:'http://purl.org/dc/elements/1.1/', cc:'http://creativecommons.org/ns#', rdf:'http://www.w3.org/1999/02/22-rdf-syntax-ns#', sketch:'http://www.bohemiancoding.com/sketch/ns', serif:'http://www.serif.com/', i:'http://ns.adobe.com/AdobeIllustrator/10.0/', x:'http://ns.adobe.com/Extensibility/1.0/', svg:SVG_NS};
+    function addMissingPrefixes(text) {
+      const rs = findSvgRootStart(text); if (rs < 0) return {text, added:[]};
+      const end = findTagEnd(text, rs); if (end.end < 0) return {text, added:[]};
+      let tag = text.slice(rs, end.end + 1); const added = [];
+      for (const [p, uri] of Object.entries(KNOWN_PREFIXES)) {
+        if (!new RegExp('(?:<\\s*/?|\\s)' + p + ':[A-Za-z_]').test(text) || new RegExp('xmlns:' + p + '\\s*=').test(text)) continue;
+        added.push(p); tag = tag.replace(/\s*(\/?)>$/, ` xmlns:${p}="${uri}"$1>`);
+      }
+      return {text: text.slice(0, rs) + tag + text.slice(end.end + 1), added};
+    }
+
+    function parseSVG(source) {
+      const text = normalizeSvgInput(source);
+      const declMatch = text.match(/^<\?xml\s+version\s*=\s*["']([^"']+)["']/i);
+      if (!text) throw new Error('Paste or import SVG XML to begin.');
+      if (text.length > 20_000_000) throw new Error('This SVG is too large to process in the browser workspace.');
+
+      let doc = new DOMParser().parseFromString(text, 'image/svg+xml');
+      const parseError = getXmlParserError(doc);
+      if (parseError) throw new Error(parseError.slice(0, 230));
+
+      let root = doc.documentElement;
+      if (!root) throw new Error('The XML document has no root element.');
+      if (String(root.localName || root.nodeName).toLowerCase() !== 'svg') {
+        throw new Error('The document root must be an <svg> element. Paste the complete SVG document, including its opening and closing <svg> tags.');
+      }
+
+      // A root bound to a different namespace is not a valid SVG root. A missing
+      // namespace, however, is common in hand-written snippets and older exports.
+      if (root.namespaceURI && root.namespaceURI !== SVG_NS) {
+        throw new Error(`The root <svg> element uses an unsupported namespace: ${root.namespaceURI}`);
+      }
+
+      // Normalize namespace-less markup and prefixed roots. setAttributeNS makes
+      // the namespace declaration explicit before serialization and reparsing.
+      if (root.namespaceURI !== SVG_NS || root.getAttribute('xmlns') !== SVG_NS) {
+        root.setAttribute('xmlns', SVG_NS);
+        const normalized = new XMLSerializer().serializeToString(root);
+        doc = new DOMParser().parseFromString(normalized, 'image/svg+xml');
+        const normalizeError = getXmlParserError(doc);
+        if (normalizeError) throw new Error(`Could not normalize this SVG document: ${normalizeError}`.slice(0, 230));
+        root = doc.documentElement;
+        if (!root || String(root.localName || root.nodeName).toLowerCase() !== 'svg' || root.namespaceURI !== SVG_NS) {
+          throw new Error('Could not establish the SVG namespace. Check the root element and namespace declarations.');
+        }
+      }
+
+      normalizeViewBox(root);
+      doc.__decl = {version: declMatch ? declMatch[1] : '1.0'};
+      return doc;
+    }
+
+    function safeReference(value) {
+      const v = String(value || '').trim();
+      if (!v) return true;
+      if (v.startsWith('#')) return true;
+      return /^data:image\/(?:png|jpe?g|gif|webp);base64,/i.test(v);
+    }
+    function sanitizeDocument(doc) {
+      const clone = doc.cloneNode(true);
+      const root = clone.documentElement;
+      let removals = 0;
+      const dangerousTags = new Set(['script','foreignobject','iframe','object','embed','applet','frame','frameset','link','meta','audio','video','animate','animatemotion','animatetransform','set']);
+      const all = [root, ...Array.from(root.querySelectorAll('*'))];
+      for (const el of all) {
+        if (!el.parentNode) continue;
+        if (dangerousTags.has(el.localName.toLowerCase())) {
+          el.parentNode.removeChild(el); removals++; continue;
+        }
+        for (const attr of Array.from(el.attributes)) {
+          const name = attr.name.toLowerCase();
+          const value = attr.value || '';
+          if (/^on[a-z]+$/i.test(name) || name === 'xml:base' || /(?:javascript\s*:|vbscript\s*:|expression\s*\()/i.test(value)) {
+            el.removeAttributeNode(attr); removals++; continue;
+          }
+          if ((name === 'href' || name === 'xlink:href' || attr.localName.toLowerCase() === 'href') && !safeReference(value)) {
+            el.removeAttributeNode(attr); removals++; continue;
+          }
+          if (/url\s*\(/i.test(value)) {
+            const cleaned = value.replace(/url\(\s*(['"]?)(.*?)\1\s*\)/gi, (whole, quote, ref) => {
+              return safeReference(ref) ? whole : 'none';
+            });
+            if (cleaned !== value) { attr.value = cleaned; removals++; }
+          }
+        }
+        if (el.localName.toLowerCase() === 'style') {
+          const before = el.textContent || '';
+          let after = before.replace(/@import\s+[^;]+;?/gi, '').replace(/url\(\s*(['"]?)(.*?)\1\s*\)/gi, (whole, quote, ref) => safeReference(ref) ? whole : 'none');
+          after = after.replace(/expression\s*\([^)]*\)/gi, '');
+          if (after !== before) { el.textContent = after; removals++; }
+        }
+      }
+      // Comments are safe markup; retain them unless the user explicitly applies purification.
+      normalizeViewBox(root);
+      clone.__decl = doc.__decl; return { doc: clone, removals };
+    }
+
+    function removeAttrByName(el, attr) { try { el.removeAttributeNode(attr); } catch (_) {} }
+    function applyPurification(doc, options) {
+      const root = doc.documentElement;
+      const all = [root, ...Array.from(root.querySelectorAll('*'))];
+      let changed = 0;
+      const appPrefixes = /^(?:inkscape|sodipodi|adobe|illustrator|serif|svg-edit|inkview|krita)(?::|$)/i;
+      const appColon = /^(?:ai|i|x|xodm|corel|sketch|bx|figma|vectornator|affinity|gravit):/i;
+      const lockPattern = /(?:lock|protect|readonly|read-only|prevent-edit)/i;
+      for (const el of all) {
+        if (!el.parentNode && el !== root) continue;
+        const local = el.localName.toLowerCase();
+        if (options.meta && el !== root && el.namespaceURI && el.namespaceURI !== SVG_NS && el.parentNode) { el.parentNode.removeChild(el); changed++; continue; }
+        if (options.meta && (local === 'metadata' || local === 'namedview')) {
+          if (el !== root && el.parentNode) { el.parentNode.removeChild(el); changed++; }
+          continue;
+        }
+        for (const attr of Array.from(el.attributes)) {
+          const name = attr.name;
+          const lower = name.toLowerCase();
+          const namespace = (attr.namespaceURI || '').toLowerCase();
+          if (options.data && lower.startsWith('data-')) { removeAttrByName(el, attr); changed++; continue; }
+          if (options.locks && (lockPattern.test(lower) || appPrefixes.test(name) || appColon.test(name) || /(?:inkscape|sodipodi|adobe|illustrator|corel|bohemiancoding|serif\.com)/i.test(namespace))) {
+            // Keep the SVG and XLink namespace declarations, which may be required for valid markup.
+            if (/^xmlns(?::|$)/i.test(name) && !/^(?:xmlns:(?:inkscape|sodipodi|adobe|illustrator|serif|svg-edit|inkview|krita))$/i.test(name)) continue;
+            removeAttrByName(el, attr); changed++;
+          }
+        }
+      }
+      if (options.meta) {
+        const walk = doc.createTreeWalker(root, NodeFilter.SHOW_COMMENT);
+        const list = []; while (walk.nextNode()) list.push(walk.currentNode);
+        list.forEach(n => { n.parentNode?.removeChild(n); changed++; });
+        // Remove editor-specific namespace declarations after their metadata is gone.
+        for (const attr of Array.from(root.attributes)) {
+          if (/^xmlns:(?:inkscape|sodipodi|adobe|illustrator|serif|svg-edit|inkview|krita)$/i.test(attr.name)) { root.removeAttributeNode(attr); changed++; }
+        }
+      }
+      if (options.empty) {
+        let groups = Array.from(root.querySelectorAll('g'));
+        for (let i = groups.length - 1; i >= 0; i--) {
+          const group = groups[i];
+          if (!group.querySelector('*') && !(group.textContent || '').trim()) { group.remove(); changed++; }
+        }
+      }
+      if (options.empty) {
+        for (const d of Array.from(root.querySelectorAll('defs'))) if (!d.querySelector('*') && !(d.textContent || '').trim()) { d.remove(); changed++; }
+      }
+      if (options.unwrap) changed += unwrapSingleGroups(doc);
+      if (options.meta) changed += dropUnusedNamespaces(root);
+      normalizeViewBox(root);
+      return changed;
+    }
+
+    function applyOverrides(doc, options) {
+      const root = doc.documentElement;
+      const drawables = root.querySelectorAll('path,rect,circle,ellipse,line,polyline,polygon,text,tspan,use,image');
+      let changed = 0;
+      for (const el of drawables) {
+        if (options.stroke) {
+          // Inline presentation overrides also cover shapes whose stroke is inherited or class-driven.
+          el.style.setProperty('stroke-width', `${options.strokeWidth}px`);
+          changed++;
+        }
+        if (options.fill) {
+          const attrFill = (el.getAttribute('fill') || '').trim().toLowerCase();
+          const inlineStyle = (el.getAttribute('style') || '').toLowerCase();
+          const inlineNone = /(?:^|;)\s*fill\s*:\s*none(?:\s*;|\s*$)/.test(inlineStyle);
+          if (attrFill !== 'none' && !inlineNone) {
+            // Preserve explicit fill="none" so stroke-only paths remain stroke-only.
+            el.style.setProperty('fill', options.fillColor);
+            changed++;
+          }
+        }
+      }
+      return changed;
+    }
+
+    function escapeXml(text) {
+      return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function prettyElement(el, depth = 0) {
+      const indent = '  '.repeat(depth);
+      const attrs = Array.from(el.attributes).map(a => ` ${a.name}="${escapeXml(a.value)}"`).join('');
+      const open = `<${el.tagName}${attrs}`;
+      if (!el.childNodes.length) return `${indent}${open} />`;
+      const meaningful = Array.from(el.childNodes).filter(n => n.nodeType !== Node.TEXT_NODE || (n.nodeValue || '').trim());
+      if (!meaningful.length) return `${indent}${open} />`;
+      const hasElement = meaningful.some(n => n.nodeType === Node.ELEMENT_NODE);
+      const hasText = meaningful.some(n => n.nodeType === Node.TEXT_NODE || n.nodeType === Node.CDATA_SECTION_NODE);
+      if (!hasElement) {
+        const inner = meaningful.map(n => {
+          if (n.nodeType === Node.TEXT_NODE || n.nodeType === Node.CDATA_SECTION_NODE) return escapeXml(n.nodeValue || '');
+          if (n.nodeType === Node.COMMENT_NODE) return `<!--${n.nodeValue || ''}-->`;
+          return new XMLSerializer().serializeToString(n);
+        }).join('');
+        return `${indent}${open}>${inner}</${el.tagName}>`;
+      }
+      // Avoid changing mixed text/tspan semantics by serializing mixed content as-is.
+      if (hasText) return `${indent}${new XMLSerializer().serializeToString(el)}`;
+      const children = meaningful.map(n => n.nodeType === Node.ELEMENT_NODE ? prettyElement(n, depth + 1) : `${'  '.repeat(depth + 1)}${new XMLSerializer().serializeToString(n)}`);
+      return `${indent}${open}>\n${children.join('\n')}\n${indent}</${el.tagName}>`;
+    }
+    function serializeSVG(doc) {
+      const root = doc.documentElement;
+      normalizeViewBox(root);
+      const ver = /^1\.[01]$/.test((doc.__decl || {}).version || '') ? doc.__decl.version : '1.0';
+      // The file is always written as UTF-8, so the declaration must say UTF-8 (original XML version is kept).
+      return `<?xml version="${ver}" encoding="UTF-8"?>\n${prettyElement(root)}\n`;
+    }
+
+    // A minimal SVG transform parser, using 2D affine matrices in SVG order.
+    function multiplyMatrix(a, b) {
+      return [a[0]*b[0]+a[2]*b[1], a[1]*b[0]+a[3]*b[1], a[0]*b[2]+a[2]*b[3], a[1]*b[2]+a[3]*b[3], a[0]*b[4]+a[2]*b[5]+a[4], a[1]*b[4]+a[3]*b[5]+a[5]];
+    }
+    function parseTransform(value) {
+      let result = [1,0,0,1,0,0];
+      const pattern = /([a-zA-Z]+)\s*\(([^)]*)\)/g; let match;
+      while ((match = pattern.exec(value || ''))) {
+        const name = match[1].toLowerCase();
+        const nums = (match[2].match(/[-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?/g) || []).map(Number);
+        let m = [1,0,0,1,0,0];
+        if (name === 'matrix' && nums.length >= 6) m = nums.slice(0,6);
+        else if (name === 'translate') m = [1,0,0,1,nums[0] || 0,nums.length > 1 ? nums[1] : 0];
+        else if (name === 'scale') m = [nums[0] ?? 1,0,0,nums.length > 1 ? nums[1] : (nums[0] ?? 1),0,0];
+        else if (name === 'rotate') {
+          const r = (nums[0] || 0) * Math.PI / 180, c = Math.cos(r), s = Math.sin(r);
+          m = [c,s,-s,c,0,0];
+          if (nums.length >= 3) {
+            const t1 = [1,0,0,1,nums[1],nums[2]], t2 = [1,0,0,1,-nums[1],-nums[2]];
+            m = multiplyMatrix(multiplyMatrix(t1,m),t2);
+          }
+        } else if (name === 'skewx') m = [1,0,Math.tan((nums[0] || 0)*Math.PI/180),1,0,0];
+        else if (name === 'skewy') m = [1,Math.tan((nums[0] || 0)*Math.PI/180),0,1,0,0];
+        result = multiplyMatrix(result, m);
+      }
+      return result;
+    }
+    function transformPoint(p, matrix) {
+      return {x: matrix[0]*p.x + matrix[2]*p.y + matrix[4], y: matrix[1]*p.x + matrix[3]*p.y + matrix[5]};
+    }
+    function elementMatrix(el, root) {
+      const chain = []; let node = el;
+      while (node && node.nodeType === Node.ELEMENT_NODE) { chain.push(node); if (node === root) break; node = node.parentElement; }
+      let matrix = [1,0,0,1,0,0];
+      for (let i = chain.length - 1; i >= 0; i--) matrix = multiplyMatrix(matrix, parseTransform(chain[i].getAttribute('transform')));
+      return matrix;
+    }
+    function pathGeometry(d, matrix) {
+      const anchors = [], handles = [];
+      let x = 0, y = 0, sx = 0, sy = 0, pl = '', pc = null, pq = null, started = false;
+      const P = (px, py) => transformPoint({x:px, y:py}, matrix);
+      const A = (px, py, start = false) => anchors.push({...P(px, py), start});
+      const H = (px, py, links) => handles.push({...P(px, py), links:links.map(q => P(q.x, q.y))});
+      for (const {c, a} of scanPath(d)) {
+        const l = c.toLowerCase(), r = c === l, ox = x, oy = y, X = v => r ? ox + v : v, Y = v => r ? oy + v : v;
+        if (!started && l !== 'm') break;
+        if (l === 'm') { started = true; x = X(a[0]); y = Y(a[1]); sx = x; sy = y; A(x, y, true); }
+        else if (l === 'z') { x = sx; y = sy; }
+        else if (l === 'l') { x = X(a[0]); y = Y(a[1]); A(x, y); }
+        else if (l === 'h') { x = r ? ox + a[0] : a[0]; A(x, y); }
+        else if (l === 'v') { y = r ? oy + a[0] : a[0]; A(x, y); }
+        else if (l === 'c' || l === 's') {
+          let c1, i0 = 0;
+          if (l === 'c') { c1 = {x:X(a[0]), y:Y(a[1])}; i0 = 2; }
+          else c1 = ((pl === 'c' || pl === 's') && pc) ? {x:2*ox-pc.x, y:2*oy-pc.y} : {x:ox, y:oy};
+          const c2 = {x:X(a[i0]), y:Y(a[i0+1])}, p = {x:X(a[i0+2]), y:Y(a[i0+3])};
+          H(c1.x, c1.y, [{x:ox, y:oy}]); H(c2.x, c2.y, [p]); x = p.x; y = p.y; A(x, y); pc = c2;
+        } else if (l === 'q' || l === 't') {
+          let q, p;
+          if (l === 'q') { q = {x:X(a[0]), y:Y(a[1])}; p = {x:X(a[2]), y:Y(a[3])}; }
+          else { q = ((pl === 'q' || pl === 't') && pq) ? {x:2*ox-pq.x, y:2*oy-pq.y} : {x:ox, y:oy}; p = {x:X(a[0]), y:Y(a[1])}; }
+          H(q.x, q.y, [{x:ox, y:oy}, p]); x = p.x; y = p.y; A(x, y); pq = q;
+        } else if (l === 'a') { x = X(a[5]); y = Y(a[6]); A(x, y); }
+        if (l !== 'c' && l !== 's') pc = null;
+        if (l !== 'q' && l !== 't') pq = null;
+        pl = l;
+      }
+      return {anchors, handles};
+    }
+    function analyzeGeometry(doc) {
+      const root = doc.documentElement;
+      const anchors = [], handles = [];
+      const drawableTags = new Set(['path','rect','circle','ellipse','line','polyline','polygon','text','tspan','use','image']);
+      const nodes = [root, ...Array.from(root.querySelectorAll('*'))].filter(el => drawableTags.has(el.localName.toLowerCase()) && !inDefs(el));
+      const toNum = (el, attr, fallback=0) => { const n=parseFloat(el.getAttribute(attr));return Number.isFinite(n)?n:fallback; };
+      for (const el of nodes) {
+        const tag=el.localName.toLowerCase(); const matrix=elementMatrix(el,root); let g={anchors:[],handles:[]};
+        if (tag==='path') g=pathGeometry(el.getAttribute('d'),matrix);
+        else if (tag==='line') {
+          g.anchors=[transformPoint({x:toNum(el,'x1'),y:toNum(el,'y1')},matrix),transformPoint({x:toNum(el,'x2'),y:toNum(el,'y2')},matrix)].map((p,i)=>({...p,start:i===0}));
+        } else if (tag==='polyline'||tag==='polygon') {
+          const pts=(el.getAttribute('points')||'').match(/[-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?/g)||[];
+          for(let i=0;i+1<pts.length;i+=2)g.anchors.push({...transformPoint({x:Number(pts[i]),y:Number(pts[i+1])},matrix),start:i===0});
+        } else if (tag==='rect') {
+          const x=toNum(el,'x'),y=toNum(el,'y'),w=toNum(el,'width'),h=toNum(el,'height');
+          [[x,y],[x+w,y],[x+w,y+h],[x,y+h]].forEach((p,i)=>g.anchors.push({...transformPoint({x:p[0],y:p[1]},matrix),start:i===0}));
+        } else if (tag==='circle'||tag==='ellipse') {
+          const cx=toNum(el,'cx'),cy=toNum(el,'cy'),rx=tag==='circle'?toNum(el,'r'):toNum(el,'rx'),ry=tag==='circle'?toNum(el,'r'):toNum(el,'ry');
+          [[cx,cy-ry],[cx+rx,cy],[cx,cy+ry],[cx-rx,cy]].forEach((p,i)=>g.anchors.push({...transformPoint({x:p[0],y:p[1]},matrix),start:i===0}));
+        } else if (tag==='text'||tag==='tspan') {
+          const xs=(el.getAttribute('x')||'').match(/[-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?/g)||[];
+          const ys=(el.getAttribute('y')||'').match(/[-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?/g)||[];
+          if(xs.length&&ys.length)g.anchors.push({...transformPoint({x:Number(xs[0]),y:Number(ys[0])},matrix),start:true});
+        }
+        anchors.push(...g.anchors);handles.push(...g.handles);
+      }
+      return {anchors,handles,drawableCount:nodes.length};
+    }
+    function getViewBox(root) {
+      const values=(root.getAttribute('viewBox')||'0 0 300 150').trim().split(/[\s,]+/).map(Number);
+      if(values.length===4&&values.every(Number.isFinite)&&values[2]>0&&values[3]>0)return values;
+      return [0,0,300,150];
+    }
+    function svgEl(name, attrs={}) {
+      const el=document.createElementNS(SVG_NS,name);
+      for(const [key,value] of Object.entries(attrs)) el.setAttribute(key,String(value));
+      return el;
+    }
+    // ===== Native SVG viewer: zoom, pan, boundary box, centroids =====
+    const NON_RENDER = new Set(['defs','clippath','mask','pattern','marker','symbol','lineargradient','radialgradient','filter','metadata','title','desc','style','script']);
+    function inDefs(el) { for (let n = el.parentElement; n; n = n.parentElement) if (NON_RENDER.has(n.localName.toLowerCase())) return true; return false; }
+    function hiddenLive(el) { for (let n = el; n && n.nodeType === 1; n = n.parentElement) if (getComputedStyle(n).display === 'none') return true; return false; }
+    const fmt = n => Number.isFinite(n) ? String(Math.round(n * 1000) / 1000) : '—';
+
+    // ---- GEOM-START (pure geometry helpers) ----
+    function scanPath(d) {
+      const s = String(d || ''), counts = {m:2,l:2,h:1,v:1,c:6,s:4,q:4,t:2,a:7,z:0}, segs = [];
+      const numRe = /[\s,]*([-+]?(?:\d*\.\d+|\d+\.?)(?:[eE][-+]?\d+)?)/y, flagRe = /[\s,]*([01])/y, cmdRe = /[\s,]*([a-zA-Z])/y;
+      let i = 0, cmd = '';
+      while (i < s.length) {
+        cmdRe.lastIndex = i; const m = cmdRe.exec(s);
+        if (m) {
+          const k = m[1].toLowerCase(); if (!(k in counts)) break;
+          cmd = m[1]; i = cmdRe.lastIndex;
+          if (k === 'z') { segs.push({c:'z',a:[]}); continue; }
+        } else if (!cmd || cmd.toLowerCase() === 'z') break;
+        const k = cmd.toLowerCase(), n = counts[k], a = [];
+        for (let j = 0; j < n; j++) {
+          const re = (k === 'a' && (j === 3 || j === 4)) ? flagRe : numRe;
+          re.lastIndex = i; const mm = re.exec(s);
+          if (!mm) { a.length = 0; break; }
+          a.push(parseFloat(mm[1])); i = re.lastIndex;
+        }
+        if (a.length !== n) break;
+        segs.push({c:cmd,a});
+        if (cmd === 'M') cmd = 'L'; else if (cmd === 'm') cmd = 'l';
+      }
+      return segs;
+    }
+    function arcPoints(x1,y1,rx,ry,deg,fa,fs,x2,y2) {
+      rx = Math.abs(rx); ry = Math.abs(ry);
+      if (!rx || !ry || (x1 === x2 && y1 === y2)) return [{x:x2,y:y2}];
+      const phi = deg * Math.PI / 180, cp = Math.cos(phi), sp = Math.sin(phi);
+      const dx = (x1-x2)/2, dy = (y1-y2)/2, xp = cp*dx + sp*dy, yp = -sp*dx + cp*dy;
+      const lam = xp*xp/(rx*rx) + yp*yp/(ry*ry);
+      if (lam > 1) { const s = Math.sqrt(lam); rx *= s; ry *= s; }
+      const num = rx*rx*ry*ry - rx*rx*yp*yp - ry*ry*xp*xp, den = rx*rx*yp*yp + ry*ry*xp*xp;
+      const co = (fa === fs ? -1 : 1) * Math.sqrt(Math.max(0, den ? num/den : 0));
+      const cxp = co*rx*yp/ry, cyp = -co*ry*xp/rx;
+      const cx = cp*cxp - sp*cyp + (x1+x2)/2, cy = sp*cxp + cp*cyp + (y1+y2)/2;
+      const ux = (xp-cxp)/rx, uy = (yp-cyp)/ry, vx = (-xp-cxp)/rx, vy = (-yp-cyp)/ry;
+      const th1 = Math.atan2(uy, ux);
+      let dth = Math.atan2(ux*vy - uy*vx, ux*vx + uy*vy);
+      if (!fs && dth > 0) dth -= 2*Math.PI; else if (fs && dth < 0) dth += 2*Math.PI;
+      const n = Math.max(8, Math.ceil(Math.abs(dth) / (Math.PI/48))), pts = [];
+      for (let i = 1; i <= n; i++) { const t = th1 + dth*i/n, ex = rx*Math.cos(t), ey = ry*Math.sin(t); pts.push({x:cp*ex - sp*ey + cx, y:sp*ex + cp*ey + cy}); }
+      pts[pts.length-1] = {x:x2,y:y2}; return pts;
+    }
+    function flattenPath(d) {
+      const subs = []; let cur = null, x = 0, y = 0, sx = 0, sy = 0, pc = null, pq = null, pl = '';
+      const begin = (px,py) => { cur = {pts:[{x:px,y:py}],closed:false}; subs.push(cur); };
+      const to = (px,py) => { if (!cur) begin(x,y); cur.pts.push({x:px,y:py}); x = px; y = py; };
+      for (const {c,a} of scanPath(d)) {
+        const l = c.toLowerCase(), r = c === l, ox = x, oy = y;
+        if (!subs.length && l !== 'm') break;
+        const X = v => r ? ox + v : v, Y = v => r ? oy + v : v;
+        if (l === 'm') { x = X(a[0]); y = Y(a[1]); sx = x; sy = y; begin(x,y); }
+        else if (l === 'z') { if (cur) cur.closed = true; x = sx; y = sy; cur = null; }
+        else if (l === 'l') to(X(a[0]), Y(a[1]));
+        else if (l === 'h') to(r ? ox + a[0] : a[0], y);
+        else if (l === 'v') to(x, r ? oy + a[0] : a[0]);
+        else if (l === 'c' || l === 's') {
+          let x1, y1, i0 = 0;
+          if (l === 'c') { x1 = X(a[0]); y1 = Y(a[1]); i0 = 2; }
+          else if ((pl === 'c' || pl === 's') && pc) { x1 = 2*ox - pc.x; y1 = 2*oy - pc.y; } else { x1 = ox; y1 = oy; }
+          const x2 = X(a[i0]), y2 = Y(a[i0+1]), x3 = X(a[i0+2]), y3 = Y(a[i0+3]);
+          for (let t = 1; t <= 32; t++) { const u = t/32, v = 1-u; to(v*v*v*ox + 3*v*v*u*x1 + 3*v*u*u*x2 + u*u*u*x3, v*v*v*oy + 3*v*v*u*y1 + 3*v*u*u*y2 + u*u*u*y3); }
+          pc = {x:x2,y:y2};
+        } else if (l === 'q' || l === 't') {
+          let qx, qy, ex, ey;
+          if (l === 'q') { qx = X(a[0]); qy = Y(a[1]); ex = X(a[2]); ey = Y(a[3]); }
+          else { if ((pl === 'q' || pl === 't') && pq) { qx = 2*ox - pq.x; qy = 2*oy - pq.y; } else { qx = ox; qy = oy; } ex = X(a[0]); ey = Y(a[1]); }
+          for (let t = 1; t <= 32; t++) { const u = t/32, v = 1-u; to(v*v*ox + 2*v*u*qx + u*u*ex, v*v*oy + 2*v*u*qy + u*u*ey); }
+          pq = {x:qx,y:qy};
+        } else if (l === 'a') {
+          for (const p of arcPoints(ox,oy,a[0],a[1],a[2],a[3],a[4],X(a[5]),Y(a[6]))) to(p.x,p.y);
+        }
+        if (l !== 'c' && l !== 's') pc = null;
+        if (l !== 'q' && l !== 't') pq = null;
+        pl = l;
+      }
+      return subs.filter(s => s.pts.length);
+    }
+    function centroidOf(subs, filled) {
+      if (subs.every(s => s.closed) || filled) {
+        let A = 0, sx = 0, sy = 0;
+        for (const s of subs) {
+          if (s.pts.length < 3) continue;
+          const p0 = s.pts[0]; let a = 0, cx = 0, cy = 0;
+          for (let i = 0; i < s.pts.length; i++) {
+            const p = s.pts[i], q = s.pts[(i+1) % s.pts.length];
+            const px = p.x-p0.x, py = p.y-p0.y, qx = q.x-p0.x, qy = q.y-p0.y, cr = px*qy - qx*py;
+            a += cr; cx += (px+qx)*cr; cy += (py+qy)*cr;
+          }
+          a /= 2; if (Math.abs(a) < 1e-12) continue;
+          A += a; sx += a*(p0.x + cx/(6*a)); sy += a*(p0.y + cy/(6*a));
+        }
+        if (Math.abs(A) > 1e-9) return {x:sx/A, y:sy/A, mode:'area'};
+      }
+      let L = 0, lx = 0, ly = 0;
+      for (const s of subs) {
+        const n = s.pts.length + (s.closed ? 1 : 0);
+        for (let i = 1; i < n; i++) {
+          const p = s.pts[i-1], q = s.pts[i % s.pts.length], len = Math.hypot(q.x-p.x, q.y-p.y);
+          L += len; lx += len*(p.x+q.x)/2; ly += len*(p.y+q.y)/2;
+        }
+      }
+      if (L > 0) return {x:lx/L, y:ly/L, mode:'line'};
+      return {x:subs[0].pts[0].x, y:subs[0].pts[0].y, mode:'point'};
+    }
+    // ---- GEOM-END ----
+
+    function shapeSubpaths(el, tag) {
+      const n = (a, f = 0) => { const v = parseFloat(el.getAttribute(a)); return Number.isFinite(v) ? v : f; };
+      const ellipse = (cx, cy, rx, ry) => {
+        if (!(rx > 0 && ry > 0)) return [];
+        const pts = []; for (let i = 0; i < 128; i++) { const t = i/128*2*Math.PI; pts.push({x:cx + rx*Math.cos(t), y:cy + ry*Math.sin(t)}); }
+        return [{pts, closed:true}];
+      };
+      if (tag === 'path') return flattenPath(el.getAttribute('d'));
+      if (tag === 'line') return [{pts:[{x:n('x1'),y:n('y1')},{x:n('x2'),y:n('y2')}], closed:false}];
+      if (tag === 'polyline' || tag === 'polygon') {
+        const nums = (el.getAttribute('points') || '').match(/[-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?/g) || [], pts = [];
+        for (let i = 0; i + 1 < nums.length; i += 2) pts.push({x:+nums[i], y:+nums[i+1]});
+        return pts.length ? [{pts, closed:tag === 'polygon'}] : [];
+      }
+      if (tag === 'rect') {
+        const x = n('x'), y = n('y'), w = n('width'), h = n('height');
+        return (w > 0 && h > 0) ? [{pts:[{x,y},{x:x+w,y},{x:x+w,y:y+h},{x,y:y+h}], closed:true}] : [];
+      }
+      if (tag === 'circle') return ellipse(n('cx'), n('cy'), n('r'), n('r'));
+      if (tag === 'ellipse') return ellipse(n('cx'), n('cy'), n('rx'), n('ry'));
+      return [];
+    }
+    function measureShapes(svg) {
+      const out = {shapes:[], bounds:null, incomplete:false};
+      let X0 = Infinity, Y0 = Infinity, X1 = -Infinity, Y1 = -Infinity;
+      const geom = new Set(['path','rect','circle','ellipse','line','polyline','polygon']);
+      let gi = 0, ti = 0, bi = 0;
+      for (const el of svg.querySelectorAll('path,rect,circle,ellipse,line,polyline,polygon,text,image,use')) {
+        if (el.closest('[data-svg-area-overlay]') || inDefs(el)) continue;
+        const tag = el.localName.toLowerCase();
+        if (geom.has(tag)) gi++;
+        if (hiddenLive(el)) continue;
+        const m = elementMatrix(el, svg);
+        let subs;
+        if (geom.has(tag)) subs = shapeSubpaths(el, tag);
+        else {
+          let bb = null; try { bb = el.getBBox(); } catch (_) {}
+          if (!bb || (!bb.width && !bb.height)) { out.incomplete = true; continue; }
+          subs = [{closed:true, pts:[{x:bb.x,y:bb.y},{x:bb.x+bb.width,y:bb.y},{x:bb.x+bb.width,y:bb.y+bb.height},{x:bb.x,y:bb.y+bb.height}]}];
+        }
+        subs = subs.map(s => ({closed:s.closed, pts:s.pts.map(p => transformPoint(p, m))})).filter(s => s.pts.length);
+        if (!subs.length) continue;
+        let a0 = Infinity, b0 = Infinity, a1 = -Infinity, b1 = -Infinity;
+        for (const s of subs) for (const p of s.pts) { a0 = Math.min(a0,p.x); b0 = Math.min(b0,p.y); a1 = Math.max(a1,p.x); b1 = Math.max(b1,p.y); }
+        // Axis-aligned transforms: use the browser's exact analytic bounding box.
+        if (geom.has(tag) && Math.abs(m[1]) < 1e-9 && Math.abs(m[2]) < 1e-9) {
+          try {
+            const g = el.getBBox();
+            if (g.width || g.height) {
+              const p = transformPoint({x:g.x,y:g.y}, m), q = transformPoint({x:g.x+g.width,y:g.y+g.height}, m);
+              a0 = Math.min(p.x,q.x); a1 = Math.max(p.x,q.x); b0 = Math.min(p.y,q.y); b1 = Math.max(p.y,q.y);
+            }
+          } catch (_) {}
+        }
+        X0 = Math.min(X0,a0); Y0 = Math.min(Y0,b0); X1 = Math.max(X1,a1); Y1 = Math.max(Y1,b1);
+        const c = centroidOf(subs, getComputedStyle(el).fill !== 'none');
+        const kind = geom.has(tag) ? 'shape' : tag === 'text' ? 'text' : tag === 'image' ? 'bitmap' : 'use';
+        let info = '', kindIdx = 0;
+        if (kind === 'text') { kindIdx = ++ti; info = (el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 32); }
+        else if (kind === 'bitmap') {
+          kindIdx = ++bi; const href = el.getAttribute('href') || el.getAttribute('xlink:href') || '';
+          info = /^data:/i.test(href) ? 'embedded ' + ((href.match(/^data:image\/([\w+.-]+)/i) || [, ''])[1] || 'image') : 'linked image';
+        }
+        out.shapes.push({tag, kind, kindIdx, info, label:tag + (el.id ? '#' + el.id : ''), x:c.x, y:c.y, mode:c.mode, isShape:kind === 'shape', idx:kind === 'shape' ? gi : 0, box:{x:a0, y:b0, w:a1-a0, h:b1-b0}});
+      }
+      if (out.shapes.length) out.bounds = {x:X0, y:Y0, w:X1-X0, h:Y1-Y0};
+      return out;
+    }
+
+    const viewers = {};
+    function viewerFor(stage) {
+      const key = stage.id === 'preview-stage-to-code' ? 'to-code' : 'to-svg';
+      return viewers[key] || (viewers[key] = createViewer(stage, key));
+    }
+    function resetView(key) { if (viewers[key]) viewers[key].baseKey = ''; }
+    function clearPreview(stage) { viewerFor(stage).clear(); }
+    async function copyPlain(text) {
+      try { await navigator.clipboard.writeText(text); toast(`Copied: ${text}`); }
+      catch (_) { toast(`Copy is blocked here. Value: ${text}`, true); }
+    }
+
+    function createViewer(stage, key) {
+      const v = {stage, key, svg:null, base:null, view:null, analysis:null, m:null, baseKey:'', u:0, raf:0, ptrs:new Map()};
+      const sh = k => $(`show-${k}-${key}`).checked;
+      const rectOf = () => stage.getBoundingClientRect();
+
+      // The SVG lives in a shadow root: its <style> rules and ids can never leak into, or collide with, the app or the other preview.
+      v.host = document.createElement('div'); v.host.className = 'svg-host';
+      v.shadow = v.host.attachShadow({mode:'open'});
+      const css = document.createElement('style'); css.textContent = ':host{display:block;position:absolute;inset:0}'; v.shadow.appendChild(css);
+      v.bar = document.createElement('div'); v.bar.className = 'zoom-bar'; v.bar.hidden = true;
+      v.bar.innerHTML = '<button type="button" data-act="out" title="Zoom out (−)" aria-label="Zoom out"><i class="fa-solid fa-minus"></i></button><span class="zoom-level" data-zoom aria-live="off">100%</span><button type="button" data-act="in" title="Zoom in (+)" aria-label="Zoom in"><i class="fa-solid fa-plus"></i></button><span class="zoom-sep"></span><button type="button" data-act="fit" title="Fit canvas (0)" aria-label="Fit canvas"><i class="fa-solid fa-expand"></i></button><button type="button" data-act="shapes" title="Fit to shapes" aria-label="Fit to shapes"><i class="fa-solid fa-crosshairs"></i></button>';
+      v.hint = document.createElement('div'); v.hint.className = 'stage-hint'; v.hint.hidden = true; v.hint.textContent = 'Scroll to zoom · Drag to pan · Double-click to fit';
+      stage.tabIndex = 0; stage.setAttribute('role', 'group'); stage.setAttribute('aria-label', 'SVG preview. Scroll to zoom, drag to pan.');
+      stage.insertBefore(v.host, stage.firstChild); stage.append(v.bar, v.hint);
+
+      v.ensureMeasure = () => v.m || (v.m = measureShapes(v.svg));
+      v.level = () => {
+        const r = rectOf(); if (!r.width || !v.base || !v.view) return 100;
+        return Math.round(Math.min(r.width/v.view.w, r.height/v.view.h) / Math.min(r.width/v.base.w, r.height/v.base.h) * 100);
+      };
+      v.queueOverlay = () => { if (v.raf) return; v.raf = requestAnimationFrame(() => { v.raf = 0; v.drawOverlay(); }); };
+      v.apply = () => {
+        if (!v.svg || !v.view) return;
+        const w = v.view; v.svg.setAttribute('viewBox', `${w.x} ${w.y} ${w.w} ${w.h}`);
+        v.bar.querySelector('[data-zoom]').textContent = `${v.level()}%`;
+        const r = rectOf();
+        if (r.width && r.height) { const u = Math.max(w.w/r.width, w.h/r.height); if (!v.u || Math.abs(u/v.u - 1) > 0.002) v.queueOverlay(); }
+      };
+      v.zoomAt = (f, cx, cy) => {
+        const r = rectOf(); if (!r.width || !v.view) return;
+        const z = v.base.w / (v.view.w / f); if (z < 0.02 || z > 5000) return;
+        const u = Math.max(v.view.w/r.width, v.view.h/r.height);
+        const px = v.view.x + v.view.w/2 + (cx - r.width/2)*u, py = v.view.y + v.view.h/2 + (cy - r.height/2)*u;
+        const w = v.view.w/f, h = v.view.h/f, u2 = u/f;
+        v.view = {x:px - (cx - r.width/2)*u2 - w/2, y:py - (cy - r.height/2)*u2 - h/2, w, h};
+        v.apply();
+      };
+      v.zoomCenter = f => { const r = rectOf(); v.zoomAt(f, r.width/2, r.height/2); };
+      v.panBy = (dx, dy) => {
+        const r = rectOf(); if (!r.width || !v.view) return;
+        const u = Math.max(v.view.w/r.width, v.view.h/r.height); v.view.x -= dx*u; v.view.y -= dy*u; v.apply();
+      };
+      v.fitBox = (b, pad = 0.08) => {
+        const w = Math.max(b.w, 1e-6), h = Math.max(b.h, 1e-6), s = Math.max(w, h);
+        const bw = b.w > 0 ? w : s, bh = b.h > 0 ? h : s;
+        v.view = {x:b.x - bw*pad - (bw-b.w)/2, y:b.y - bh*pad - (bh-b.h)/2, w:bw*(1+2*pad), h:bh*(1+2*pad)}; v.apply();
+      };
+      v.fit = () => { if (v.base) { v.view = {...v.base}; v.apply(); } };
+      v.fitShapes = () => {
+        const m = v.ensureMeasure();
+        if (!m.bounds) { toast('No measurable shapes found in this SVG.', true); return; }
+        v.fitBox(m.bounds);
+      };
+
+      v.hl = 0; v.setHl = n => { v.hl = n; if (v.svg) v.drawOverlay(); };
+      v.drawOverlay = () => {
+        if (!v.svg) return;
+        v.svg.querySelectorAll(':scope > [data-svg-area-overlay]').forEach(n => n.remove());
+        const r = rectOf(); if (!r.width || !r.height) { v.u = 0; return; }
+        const u = Math.max(v.view.w/r.width, v.view.h/r.height); v.u = u;
+        const mk = markerPrefs(key), z = u * mk.size;
+        const g = svgEl('g', {'data-svg-area-overlay':'true','aria-hidden':'true','pointer-events':'none'});
+        const NS = {'vector-effect':'non-scaling-stroke'};
+        g.appendChild(svgEl('rect', {x:v.base.x, y:v.base.y, width:v.base.w, height:v.base.h, fill:'none', stroke:'#8a97bd', 'stroke-opacity':.55, 'stroke-width':1, 'stroke-dasharray':'2 4', ...NS}));
+        const m = (sh('bounds') || sh('centroids') || sh('elboxes') || sh('texts') || sh('bitmaps') || v.hl) ? v.ensureMeasure() : null;
+        const items = m ? m.shapes.filter(s => s.isShape) : [];
+        if (sh('elboxes')) {
+          for (const s of items) g.appendChild(svgEl('rect', {x:s.box.x, y:s.box.y, width:s.box.w, height:s.box.h, fill:mk.boxes, 'fill-opacity':.07, stroke:mk.boxes, 'stroke-width':1.2, ...NS}));
+          if (items.length <= 500) for (const s of items) {
+            const t = svgEl('text', {x:s.box.x + 2*z, y:s.box.y - 3*z, 'font-size':10*z, 'font-family':'DM Mono, monospace', 'font-weight':700, fill:mk.boxes, stroke:mk.outline, 'stroke-width':3, 'paint-order':'stroke', 'stroke-linejoin':'round', ...NS});
+            t.textContent = String(s.idx); g.appendChild(t);
+          }
+        }
+        for (const [flag, kind, col, dash, pre] of [['texts', 'text', mk.text, '2 3', 'T'], ['bitmaps', 'bitmap', mk.bitmap, '9 3', 'B']]) {
+          if (!sh(flag) || !m) continue;
+          const list = m.shapes.filter(s => s.kind === kind);
+          for (const s of list) g.appendChild(svgEl('rect', {x:s.box.x, y:s.box.y, width:s.box.w, height:s.box.h, fill:col, 'fill-opacity':.09, stroke:col, 'stroke-width':1.6, 'stroke-dasharray':dash, ...NS}));
+          if (list.length <= 300) for (const s of list) {
+            const t = svgEl('text', {x:s.box.x + 2*z, y:s.box.y + s.box.h + 11*z, 'font-size':10*z, 'font-family':'DM Mono, monospace', 'font-weight':700, fill:col, stroke:mk.outline, 'stroke-width':3, 'paint-order':'stroke', 'stroke-linejoin':'round', ...NS});
+            t.textContent = pre + s.kindIdx; g.appendChild(t);
+          }
+        }
+        if (sh('bounds') && m && m.bounds) {
+          const b = m.bounds;
+          g.appendChild(svgEl('rect', {x:b.x, y:b.y, width:b.w, height:b.h, fill:mk.bounds, 'fill-opacity':.06, stroke:mk.bounds, 'stroke-width':1.5, 'stroke-dasharray':'7 4', ...NS}));
+        }
+        const hs = v.hl && items.find(s => s.idx === v.hl);
+        if (hs) {
+          g.appendChild(svgEl('rect', {x:hs.box.x, y:hs.box.y, width:hs.box.w, height:hs.box.h, fill:mk.boxes, 'fill-opacity':.16, stroke:'#fff', 'stroke-width':2.4, ...NS}));
+          g.appendChild(svgEl('rect', {x:hs.box.x, y:hs.box.y, width:hs.box.w, height:hs.box.h, fill:'none', stroke:mk.boxes, 'stroke-width':1.2, ...NS}));
+        }
+        const an = v.analysis || {anchors:[], handles:[]}, CAP = 6000;
+        const capped = (sh('nodes') && an.anchors.length > CAP) || (sh('handles') && an.handles.length > CAP);
+        v.hint.textContent = capped ? `Showing the first ${CAP.toLocaleString()} markers per type. Use Optimize nodes to simplify.` : 'Scroll to zoom · Drag to pan · Double-click to fit';
+        if (capped) v.hint.classList.remove('faded');
+        if (sh('handles')) {
+          for (const h of an.handles.slice(0, CAP)) {
+            for (const l of (h.links || [])) g.appendChild(svgEl('line', {x1:l.x, y1:l.y, x2:h.x, y2:h.y, stroke:mk.hline, 'stroke-width':1, 'stroke-dasharray':'3 3', opacity:.85, ...NS}));
+            g.appendChild(svgEl('circle', {cx:h.x, cy:h.y, r:2.8*z, fill:mk.handle, stroke:mk.outline, 'stroke-width':1, ...NS}));
+          }
+        }
+        if (sh('nodes')) {
+          for (const a of an.anchors.slice(0, CAP)) g.appendChild(svgEl('circle', {cx:a.x, cy:a.y, r:(a.start ? 4.4 : 3.6)*z, fill:a.start ? mk.start : mk.node, stroke:mk.outline, 'stroke-width':1.2, ...NS}));
+        }
+        if (sh('centroids') && m) {
+          const k = 8*z;
+          for (const s of m.shapes) {
+            for (const [w, col] of [[3.6, mk.outline], [1.7, mk.centroid]]) {
+              g.appendChild(svgEl('line', {x1:s.x-k, y1:s.y-k, x2:s.x+k, y2:s.y+k, stroke:col, 'stroke-width':w, 'stroke-linecap':'round', ...NS}));
+              g.appendChild(svgEl('line', {x1:s.x-k, y1:s.y+k, x2:s.x+k, y2:s.y-k, stroke:col, 'stroke-width':w, 'stroke-linecap':'round', ...NS}));
+            }
+            g.appendChild(svgEl('circle', {cx:s.x, cy:s.y, r:3.4*z, fill:mk.centroid, stroke:'#fff', 'stroke-width':1.3, ...NS}));
+          }
+        }
+        v.svg.appendChild(g);
+      };
+
+      v.renderMeasure = () => {
+        const box = $(`measure-${key}`), wb = sh('bounds'), wc = sh('centroids'), wi = sh('elboxes'), wbm = sh('bitmaps'), wt = sh('texts');
+        if (!v.svg || (!wb && !wc && !wi && !wbm && !wt)) { box.hidden = true; box.replaceChildren(); return; }
+        const m = v.ensureMeasure(), mk = markerPrefs(key);
+        let html = `<details class="measure-details"${v.measureOpen ? ' open' : ''}><summary class="measure-head"><strong>Geometry measurements</strong><span>viewBox units · strokes excluded</span></summary>`;
+        const cnt = (label, color, n, note) => `<div class="measure-row"><div><b style="color:${color}">${label}</b> <code>${n}</code> <small style="color:var(--faint)">${note}</small></div></div>`;
+        if (wi) {
+          const items = m.shapes.filter(s => s.kind === 'shape'), paths = items.filter(s => s.tag === 'path').length, nat = items.length - paths;
+          html += cnt('Shapes', mk.boxes, items.length, `${paths} path${paths === 1 ? '' : 's'} · ${nat} native shape${nat === 1 ? '' : 's'} · compound paths = 1 box`);
+        }
+        const tx = m.shapes.filter(s => s.kind === 'text'), bm = m.shapes.filter(s => s.kind === 'bitmap');
+        if (wt) html += cnt('Text', mk.text, tx.length, 'editable &lt;text&gt; elements (outlined text counts as shapes)');
+        if (wbm) html += cnt('Bitmaps', mk.bitmap, bm.length, 'embedded or linked &lt;image&gt; elements');
+        const rows = [];
+        if (wt) rows.push(...tx.map(s => `<li><span><i class="fa-solid fa-font" style="color:${mk.text}"></i>T${s.kindIdx}. ${escapeXml(s.info || '(empty text)')}</span><span><code>${fmt(s.box.w)} × ${fmt(s.box.h)}</code></span></li>`));
+        if (wbm) rows.push(...bm.map(s => `<li><span><i class="fa-solid fa-image" style="color:${mk.bitmap}"></i>B${s.kindIdx}. ${escapeXml(s.info)}</span><span><code>${fmt(s.box.w)} × ${fmt(s.box.h)}</code></span></li>`));
+        if (rows.length) html += `<ul class="centroid-list" aria-label="Text and bitmap elements">${rows.slice(0, 100).join('')}</ul>`;
+        if (wb) {
+          if (m.bounds) {
+            const b = m.bounds, vb = `${fmt(b.x)} ${fmt(b.y)} ${fmt(b.w)} ${fmt(b.h)}`;
+            html += `<div class="measure-row"><div><b style="color:${mk.bounds}">Boundary</b> <code>x ${fmt(b.x)} · y ${fmt(b.y)} · w ${fmt(b.w)} · h ${fmt(b.h)}</code></div><button type="button" class="button subtle" style="padding:6px 9px;font-size:10px" data-copy="${escapeXml(vb)}"><i class="fa-regular fa-copy"></i> viewBox</button></div>`;
+          } else html += '<div class="measure-row">Boundary: no measurable shapes.</div>';
+        }
+        if (wc) {
+          if (m.shapes.length) {
+            html += `<ul class="centroid-list" aria-label="Shape centroids">${m.shapes.slice(0, 300).map((s, i) => `<li><span><i class="fa-solid fa-xmark" style="color:${mk.centroid}"></i>${i + 1}. ${escapeXml(s.label)}</span><span><code>${fmt(s.x)}, ${fmt(s.y)}</code> <small>${s.mode}</small></span></li>`).join('')}</ul>`;
+            if (m.shapes.length > 300) html += `<div class="measure-row">…and ${m.shapes.length - 300} more shapes.</div>`;
+          } else html += '<div class="measure-row">Centroids: no measurable shapes.</div>';
+        }
+        box.innerHTML = html + '</details>'; box.hidden = false;
+      };
+
+      v.setSvg = (svg, vb, analysis) => {
+        v.shadow.querySelectorAll('svg').forEach(n => n.remove());
+        v.svg = svg; v.analysis = analysis; v.m = null;
+        const bk = vb.join(' ');
+        v.base = {x:vb[0], y:vb[1], w:vb[2], h:vb[3]};
+        if (v.baseKey !== bk || !v.view) { v.view = {...v.base}; v.baseKey = bk; }
+        svg.setAttribute('viewBox', `${v.view.x} ${v.view.y} ${v.view.w} ${v.view.h}`);
+        v.shadow.appendChild(svg);
+        v.bar.hidden = false; v.hint.hidden = false;
+        v.apply(); v.drawOverlay(); v.renderMeasure();
+      };
+      v.clear = () => {
+        v.shadow.querySelectorAll('svg').forEach(n => n.remove());
+        v.svg = null; v.m = null; v.bar.hidden = true; v.hint.hidden = true;
+        const box = $(`measure-${key}`); box.hidden = true; box.replaceChildren();
+      };
+      v.redraw = () => { v.drawOverlay(); v.renderMeasure(); };
+
+      // Interaction: wheel zoom, drag pan, two-finger pinch, keyboard.
+      v.bar.addEventListener('click', e => {
+        const b = e.target.closest('[data-act]'); if (!b) return;
+        ({out:() => v.zoomCenter(1/1.4), in:() => v.zoomCenter(1.4), fit:() => v.fit(), shapes:() => v.fitShapes()})[b.dataset.act]();
+      });
+      stage.addEventListener('wheel', e => {
+        if (!v.svg) return; e.preventDefault();
+        const r = rectOf(), dy = e.deltaMode === 1 ? e.deltaY*16 : e.deltaY;
+        v.zoomAt(Math.exp(-dy*(e.ctrlKey ? 0.01 : 0.0017)), e.clientX - r.left, e.clientY - r.top);
+        v.hint.classList.add('faded');
+      }, {passive:false});
+      stage.addEventListener('pointerdown', e => {
+        if (!v.svg || e.button > 0 || e.target.closest('.zoom-bar')) return;
+        v.ptrs.set(e.pointerId, {x:e.clientX, y:e.clientY});
+        try { stage.setPointerCapture(e.pointerId); } catch (_) {}
+        stage.classList.add('panning'); v.hint.classList.add('faded');
+      });
+      stage.addEventListener('pointermove', e => {
+        const p = v.ptrs.get(e.pointerId); if (!p) return;
+        const nx = e.clientX, ny = e.clientY;
+        if (v.ptrs.size === 1) v.panBy(nx - p.x, ny - p.y);
+        else if (v.ptrs.size === 2) {
+          const o = [...v.ptrs.entries()].find(([id]) => id !== e.pointerId)[1], r = rectOf();
+          const d0 = Math.hypot(p.x - o.x, p.y - o.y), d1 = Math.hypot(nx - o.x, ny - o.y);
+          v.panBy((nx - p.x)/2, (ny - p.y)/2);
+          if (d0 > 0 && d1 > 0) v.zoomAt(d1/d0, (nx + o.x)/2 - r.left, (ny + o.y)/2 - r.top);
+        }
+        p.x = nx; p.y = ny;
+      });
+      const endPtr = e => { v.ptrs.delete(e.pointerId); if (!v.ptrs.size) stage.classList.remove('panning'); };
+      stage.addEventListener('pointerup', endPtr); stage.addEventListener('pointercancel', endPtr);
+      stage.addEventListener('dblclick', e => { if (v.svg && !e.target.closest('.zoom-bar')) v.fit(); });
+      stage.addEventListener('keydown', e => {
+        if (!v.svg || e.target !== stage) return;
+        const step = {ArrowLeft:[40,0], ArrowRight:[-40,0], ArrowUp:[0,40], ArrowDown:[0,-40]}[e.key];
+        if (step) { e.preventDefault(); v.panBy(step[0], step[1]); }
+        else if (e.key === '+' || e.key === '=') { e.preventDefault(); v.zoomCenter(1.25); }
+        else if (e.key === '-' || e.key === '_') { e.preventDefault(); v.zoomCenter(1/1.25); }
+        else if (e.key === '0') { e.preventDefault(); v.fit(); }
+      });
+      v.measureOpen = false;
+      $(`measure-${key}`).addEventListener('toggle', e => { if (e.target.classList && e.target.classList.contains('measure-details')) v.measureOpen = e.target.open; }, true);
+      $(`measure-${key}`).addEventListener('click', e => { const b = e.target.closest('[data-copy]'); if (b) copyPlain(b.dataset.copy); });
+      // Resizes (and a hidden tab becoming visible) re-measure and redraw screen-constant markers.
+      new ResizeObserver(() => { if (!v.svg) return; if (v.m && v.m.incomplete) v.m = null; v.redraw(); v.apply(); }).observe(stage);
+      ['nodes','handles','bounds','centroids','elboxes','texts','bitmaps'].forEach(k => $(`show-${k}-${key}`).addEventListener('change', () => v.redraw()));
+      return v;
+    }
+
+    function makePreview(stage, doc, analysis) {
+      const v = viewerFor(stage), root = doc.documentElement.cloneNode(true), vb = getViewBox(root);
+      // Inline vector SVG: never rasterized, so every zoom level re-renders at full resolution.
+      root.setAttribute('width', '100%'); root.setAttribute('height', '100%');
+      root.setAttribute('preserveAspectRatio', 'xMidYMid meet'); root.setAttribute('viewBox', vb.join(' '));
+      for (const [k, val] of [['display','block'],['width','100%'],['height','100%'],['max-width','none'],['max-height','none'],['overflow','visible']]) root.style.setProperty(k, val);
+      v.setSvg(root, vb, analysis);
+    }
+
+    // ===== Path optimizer: Bézier fitting that keeps corners, extrema and inflection points =====
+    const num = (v, p) => { let s = v.toFixed(p); if (s.indexOf('.') >= 0) s = s.replace(/0+$/, '').replace(/\.$/, ''); return (s === '-0' || s === '' || s === '-') ? '0' : s; };
+    const vsub = (a,b) => ({x:a.x-b.x, y:a.y-b.y}), vadd = (a,b) => ({x:a.x+b.x, y:a.y+b.y}), vmul = (a,k) => ({x:a.x*k, y:a.y*k});
+    const vdot = (a,b) => a.x*b.x + a.y*b.y, vlen = a => Math.hypot(a.x, a.y), vdist = (a,b) => Math.hypot(a.x-b.x, a.y-b.y);
+    const vunit = a => { const l = vlen(a); return l > 1e-12 ? {x:a.x/l, y:a.y/l} : null; };
+    const cubicAt = (p0,c1,c2,p3,t) => { const u = 1-t, a = u*u*u, b = 3*u*u*t, c = 3*u*t*t, d = t*t*t; return {x:a*p0.x+b*c1.x+c*c2.x+d*p3.x, y:a*p0.y+b*c1.y+c*c2.y+d*p3.y}; };
+    const cubicD1 = (p0,c1,c2,p3,t) => { const u = 1-t; return {x:3*(u*u*(c1.x-p0.x)+2*u*t*(c2.x-c1.x)+t*t*(p3.x-c2.x)), y:3*(u*u*(c1.y-p0.y)+2*u*t*(c2.y-c1.y)+t*t*(p3.y-c2.y))}; };
+    const cubicD2 = (p0,c1,c2,p3,t) => { const u = 1-t; return {x:6*(u*(c2.x-2*c1.x+p0.x)+t*(p3.x-2*c2.x+c1.x)), y:6*(u*(c2.y-2*c1.y+p0.y)+t*(p3.y-2*c2.y+c1.y))}; };
+    function quadRoots(A, B, C) {
+      const r = [];
+      if (Math.abs(A) < 1e-12) { if (Math.abs(B) > 1e-12) r.push(-C/B); }
+      else { const D = B*B - 4*A*C; if (D >= 0) { const s = Math.sqrt(D); r.push((-B+s)/(2*A), (-B-s)/(2*A)); } }
+      return r.filter(t => t > 1e-4 && t < 1 - 1e-4);
+    }
+    function segTan(s, p0, t) {
+      const fallback = () => vunit(vsub(s.p, p0)) || {x:1, y:0};
+      if (s.t === 'L') return fallback();
+      let c = null;
+      if (t === 0) c = vunit(vsub(s.c1, p0)) || vunit(vsub(s.c2, p0));
+      else if (t === 1) c = vunit(vsub(s.p, s.c2)) || vunit(vsub(s.p, s.c1));
+      else c = vunit(cubicD1(p0, s.c1, s.c2, s.p, t));
+      return c || fallback();
+    }
+
+    // Parse path data into absolute subpaths of L / C / A segments (H, V, Q, S, T and relative commands are normalized).
+    function absoluteSubpaths(d) {
+      const subs = []; let cur = null, x = 0, y = 0, sx = 0, sy = 0, pc = null, pq = null, pl = '';
+      const begin = (px, py) => { cur = {start:{x:px,y:py}, segs:[], closed:false}; subs.push(cur); };
+      const seg = s => { if (!cur) begin(x, y); cur.segs.push(s); };
+      for (const {c, a} of scanPath(d)) {
+        const l = c.toLowerCase(), r = c === l, ox = x, oy = y, X = v => r ? ox + v : v, Y = v => r ? oy + v : v;
+        if (!subs.length && l !== 'm') break;
+        if (l === 'm') { x = X(a[0]); y = Y(a[1]); sx = x; sy = y; begin(x, y); }
+        else if (l === 'z') { if (cur) cur.closed = true; x = sx; y = sy; cur = null; }
+        else if (l === 'l' || l === 'h' || l === 'v') {
+          const nx = l === 'v' ? x : (l === 'h' ? (r ? ox + a[0] : a[0]) : X(a[0]));
+          const ny = l === 'h' ? y : (l === 'v' ? (r ? oy + a[0] : a[0]) : Y(a[1]));
+          seg({t:'L', p:{x:nx, y:ny}}); x = nx; y = ny;
+        } else if (l === 'c' || l === 's') {
+          let c1, i0 = 0;
+          if (l === 'c') { c1 = {x:X(a[0]), y:Y(a[1])}; i0 = 2; }
+          else c1 = ((pl === 'c' || pl === 's') && pc) ? {x:2*ox-pc.x, y:2*oy-pc.y} : {x:ox, y:oy};
+          const c2 = {x:X(a[i0]), y:Y(a[i0+1])}, p = {x:X(a[i0+2]), y:Y(a[i0+3])};
+          seg({t:'C', c1, c2, p}); pc = c2; x = p.x; y = p.y;
+        } else if (l === 'q' || l === 't') {
+          let q, p;
+          if (l === 'q') { q = {x:X(a[0]), y:Y(a[1])}; p = {x:X(a[2]), y:Y(a[3])}; }
+          else { q = ((pl === 'q' || pl === 't') && pq) ? {x:2*ox-pq.x, y:2*oy-pq.y} : {x:ox, y:oy}; p = {x:X(a[0]), y:Y(a[1])}; }
+          seg({t:'C', c1:{x:ox+2/3*(q.x-ox), y:oy+2/3*(q.y-oy)}, c2:{x:p.x+2/3*(q.x-p.x), y:p.y+2/3*(q.y-p.y)}, p}); pq = q; x = p.x; y = p.y;
+        } else if (l === 'a') {
+          const p = {x:X(a[5]), y:Y(a[6])}; seg({t:'A', a:[a[0],a[1],a[2],a[3],a[4]], p}); x = p.x; y = p.y;
+        }
+        if (l !== 'c' && l !== 's') pc = null;
+        if (l !== 'q' && l !== 't') pq = null;
+        pl = l;
+      }
+      return subs;
+    }
+    const countNodes = d => scanPath(d).filter(s => s.c.toLowerCase() !== 'z').length;
+
+    // Schneider-style least-squares cubic Bézier fitting.
+    function chordParam(pc) { const u = [0]; for (let i = 1; i < pc.length; i++) u.push(u[i-1] + vdist(pc[i], pc[i-1])); const L = u[u.length-1] || 1; return u.map(v => v / L); }
+    function genBez(pc, u, t1, t2) {
+      const n = pc.length, p0 = pc[0], p3 = pc[n-1];
+      let C00 = 0, C01 = 0, C11 = 0, X0 = 0, X1 = 0;
+      for (let i = 0; i < n; i++) {
+        const t = u[i], m = 1 - t, b0 = m*m*m, b1 = 3*m*m*t, b2 = 3*m*t*t, b3 = t*t*t;
+        const A1 = vmul(t1, b1), A2 = vmul(t2, b2);
+        C00 += vdot(A1, A1); C01 += vdot(A1, A2); C11 += vdot(A2, A2);
+        const tmp = {x:pc[i].x - (p0.x*(b0+b1) + p3.x*(b2+b3)), y:pc[i].y - (p0.y*(b0+b1) + p3.y*(b2+b3))};
+        X0 += vdot(A1, tmp); X1 += vdot(A2, tmp);
+      }
+      const det = C00*C11 - C01*C01, segLen = vdist(p0, p3);
+      let a1 = 0, a2 = 0;
+      if (Math.abs(det) > 1e-12) { a1 = (X0*C11 - X1*C01)/det; a2 = (C00*X1 - C01*X0)/det; }
+      const eps = 1e-6 * segLen;
+      if (a1 < eps || a2 < eps) a1 = a2 = segLen / 3;
+      return [p0, vadd(p0, vmul(t1, a1)), vadd(p3, vmul(t2, a2)), p3];
+    }
+    function reparam(pc, u, b) {
+      return u.map((t, i) => {
+        const q = cubicAt(b[0],b[1],b[2],b[3],t), d1 = cubicD1(b[0],b[1],b[2],b[3],t), d2 = cubicD2(b[0],b[1],b[2],b[3],t);
+        const dx = q.x - pc[i].x, dy = q.y - pc[i].y, den = d1.x*d1.x + d1.y*d1.y + dx*d2.x + dy*d2.y;
+        if (Math.abs(den) < 1e-12) return t;
+        return Math.max(0, Math.min(1, t - (dx*d1.x + dy*d1.y)/den));
+      });
+    }
+    function bezErr(pc, b, u) {
+      let m = 0, si = Math.floor(pc.length/2);
+      for (let i = 1; i < pc.length - 1; i++) { const q = cubicAt(b[0],b[1],b[2],b[3],u[i]), d = (q.x-pc[i].x)**2 + (q.y-pc[i].y)**2; if (d >= m) { m = d; si = i; } }
+      return {err:Math.sqrt(m), split:si};
+    }
+    function fitCubic(pc, t1, t2, tol, out) {
+      const n = pc.length;
+      if (n === 2) { const d = vdist(pc[0], pc[1])/3; out.push([pc[0], vadd(pc[0], vmul(t1, d)), vadd(pc[1], vmul(t2, d)), pc[1]]); return; }
+      let u = chordParam(pc), b = genBez(pc, u, t1, t2), e = bezErr(pc, b, u);
+      if (e.err < tol) { out.push(b); return; }
+      if (e.err < tol * 8) {
+        for (let k = 0; k < 12; k++) { u = reparam(pc, u, b); b = genBez(pc, u, t1, t2); e = bezErr(pc, b, u); if (e.err < tol) { out.push(b); return; } }
+      }
+      const s = Math.max(1, Math.min(n - 2, e.split)), tc = vunit(vsub(pc[s-1], pc[s+1])) || t1;
+      fitCubic(pc.slice(0, s+1), t1, tc, tol, out);
+      fitCubic(pc.slice(s), vmul(tc, -1), t2, tol, out);
+    }
+    function isStraight(pc, tol) {
+      const p0 = pc[0], d = vsub(pc[pc.length-1], p0), L2 = vdot(d, d);
+      for (const q of pc) {
+        const t = L2 > 0 ? Math.max(0, Math.min(1, vdot(vsub(q, p0), d)/L2)) : 0;
+        if (Math.hypot(q.x - (p0.x + d.x*t), q.y - (p0.y + d.y*t)) > tol) return false;
+      }
+      return true;
+    }
+
+    function optimizeRun(start, segs, o, tol) {
+      const pts = [{x:start.x, y:start.y, forced:true, tin:null, tout:null, ty:[null,null]}];
+      let cur = start;
+      for (const s of segs) {
+        if (s.t === 'L' && vdist(s.p, cur) < 1e-9) continue;
+        const tS = segTan(s, cur, 0), tE = segTan(s, cur, 1), last = pts[pts.length-1];
+        last.tout = tS; if (!last.tin) last.tin = tS; last.ty[1] = s.t;
+        if (s.t === 'C') {
+          const ctrl = vdist(cur, s.c1) + vdist(s.c1, s.c2) + vdist(s.c2, s.p);
+          const n = Math.min(48, Math.max(12, Math.ceil(Math.sqrt(ctrl / Math.max(tol, 1e-9)) * 1.5)));
+          const ts = new Map(); for (let i = 1; i < n; i++) ts.set(i/n, false);
+          const d0 = vsub(s.c1, cur), d1 = vsub(s.c2, s.c1), d2 = vsub(s.p, s.c2);
+          const A = {x:d0.x-2*d1.x+d2.x, y:d0.y-2*d1.y+d2.y}, B = {x:2*(d1.x-d0.x), y:2*(d1.y-d0.y)}, C = d0;
+          if (o.extrema) for (const t of [...quadRoots(A.x,B.x,C.x), ...quadRoots(A.y,B.y,C.y)]) ts.set(t, true);
+          if (o.inflect) for (const t of quadRoots(-(A.x*B.y - A.y*B.x), 2*(C.x*A.y - C.y*A.x), C.x*B.y - C.y*B.x)) ts.set(t, true);
+          for (const [t, forced] of [...ts.entries()].sort((a, b) => a[0] - b[0])) {
+            const p = cubicAt(cur, s.c1, s.c2, s.p, t), tg = segTan(s, cur, t);
+            pts.push({x:p.x, y:p.y, tin:tg, tout:tg, forced, ty:['C','C']});
+          }
+        }
+        pts.push({x:s.p.x, y:s.p.y, tin:tE, tout:tE, forced:false, join:true, ty:[s.t, null]});
+        cur = s.p;
+      }
+      if (pts.length < 3) return null;
+      pts[pts.length-1].forced = true;
+      // Classify joins: corners are always kept; extrema / inflections are kept when enabled.
+      const cosThr = Math.cos(o.corner * Math.PI / 180); let lastSign = 0;
+      for (let i = 1; i < pts.length - 1; i++) {
+        const p = pts[i]; if (!p.join) continue;
+        const a = p.tin, b = p.tout;
+        if (vdot(a, b) < cosThr) { p.forced = true; lastSign = 0; continue; }
+        if (o.extrema) {
+          if (a.x*b.x < -1e-12 || a.y*b.y < -1e-12) p.forced = true;
+          else if ((p.ty[0] === 'C' || p.ty[1] === 'C') && (Math.abs(a.x) < 1e-4 || Math.abs(a.y) < 1e-4)) p.forced = true;
+        }
+        const cr = a.x*b.y - a.y*b.x;
+        if (o.inflect && Math.abs(cr) > 0.02) { const sg = Math.sign(cr); if (lastSign && sg !== lastSign) p.forced = true; lastSign = sg; }
+      }
+      const out = []; let a = 0;
+      for (let i = 1; i < pts.length; i++) {
+        if (!pts[i].forced) continue;
+        const pc = [pts[a]];
+        for (let k = a + 1; k <= i; k++) if (vdist(pc[pc.length-1], pts[k]) > 1e-9) pc.push(pts[k]);
+        const end = pts[i];
+        if (pc.length >= 2) {
+          if (isStraight(pc, tol)) out.push({t:'L', p:{x:end.x, y:end.y}});
+          else {
+            const beziers = []; fitCubic(pc, pts[a].tout, vmul(end.tin, -1), tol, beziers);
+            for (const b of beziers) out.push(isStraight(b, tol) ? {t:'L', p:{x:b[3].x, y:b[3].y}} : {t:'C', c1:{x:b[1].x, y:b[1].y}, c2:{x:b[2].x, y:b[2].y}, p:{x:b[3].x, y:b[3].y}});
+          }
+        }
+        a = i;
+      }
+      return out;
+    }
+
+    function optimizePathData(d, tol, o) {
+      const subs = absoluteSubpaths(d); if (!subs.length) return d;
+      const P = o.precision, tokens = []; let lastCmd = '';
+      const cmd = c => { if (c !== lastCmd) { tokens.push(c); lastCmd = c; } };
+      const pt = p => tokens.push(num(p.x, P), num(p.y, P));
+      for (const sp of subs) {
+        if (!sp.segs.length && !sp.closed) continue;
+        const outSegs = []; let cur = sp.start, runStart = cur, run = [];
+        const flush = final => {
+          if (!run.length) return;
+          let work = run, added = false;
+          if (final && sp.closed && vdist(cur, sp.start) > 1e-9) { work = run.concat([{t:'L', p:{...sp.start}}]); added = true; }
+          let res = optimizeRun(runStart, work, o, tol);
+          if (res && added) { const l = res[res.length-1]; if (l && l.t === 'L' && vdist(l.p, sp.start) < 1e-9) res = res.slice(0, -1); }
+          outSegs.push(...((res && res.length < run.length) ? res : run)); run = [];
+        };
+        for (const s of sp.segs) {
+          if (s.t === 'A') { flush(false); outSegs.push(s); cur = s.p; runStart = cur; }
+          else { if (!run.length) runStart = cur; run.push(s); cur = s.p; }
+        }
+        flush(true);
+        lastCmd = ''; cmd('M'); pt(sp.start);
+        for (const s of outSegs) {
+          if (s.t === 'L') { cmd('L'); pt(s.p); }
+          else if (s.t === 'C') { cmd('C'); pt(s.c1); pt(s.c2); pt(s.p); }
+          else { cmd('A'); tokens.push(num(s.a[0], P), num(s.a[1], P), num(s.a[2], P), String(s.a[3]), String(s.a[4])); pt(s.p); }
+        }
+        if (sp.closed) cmd('Z');
+      }
+      return tokens.join(' ');
+    }
+    function rdp(pts, tol) {
+      if (pts.length < 3) return pts;
+      const keep = new Uint8Array(pts.length); keep[0] = keep[pts.length-1] = 1;
+      const stack = [[0, pts.length - 1]];
+      while (stack.length) {
+        const [s, e] = stack.pop(); let best = -1, bi = -1;
+        const a = pts[s], b = pts[e], dx = b.x - a.x, dy = b.y - a.y, L2 = dx*dx + dy*dy;
+        for (let i = s + 1; i < e; i++) {
+          const t = L2 ? Math.max(0, Math.min(1, ((pts[i].x-a.x)*dx + (pts[i].y-a.y)*dy)/L2)) : 0;
+          const d = Math.hypot(pts[i].x - (a.x + dx*t), pts[i].y - (a.y + dy*t));
+          if (d > best) { best = d; bi = i; }
+        }
+        if (best > tol) { keep[bi] = 1; stack.push([s, bi], [bi, e]); }
+      }
+      return pts.filter((_, i) => keep[i]);
+    }
+    function optimizeDocument(doc, o) {
+      const root = doc.documentElement, vb = getViewBox(root), tolAbs = Math.hypot(vb[2], vb[3]) * o.tolPct / 100;
+      const stats = {paths:0, changed:0, before:0, after:0, bytesBefore:0, bytesAfter:0, purged:0};
+      if (o.purify) stats.purged = applyPurification(doc, {meta:true, locks:true, data:false, empty:true, unwrap:true});
+      for (const el of root.querySelectorAll('path,polyline,polygon')) {
+        const tag = el.localName.toLowerCase(), m = elementMatrix(el, root);
+        const tol = tolAbs / (Math.sqrt(Math.abs(m[0]*m[3] - m[1]*m[2])) || 1);
+        if (tag === 'path') {
+          const d = el.getAttribute('d') || ''; if (!d.trim()) continue;
+          const nb = countNodes(d); let nd = d;
+          try { nd = optimizePathData(d, tol, o); } catch (_) { nd = d; }
+          let na = countNodes(nd); if (na > nb || !na) { nd = d; na = nb; }
+          stats.paths++; stats.before += nb; stats.after += na; stats.bytesBefore += d.length; stats.bytesAfter += nd.length;
+          if (nd !== d) { el.setAttribute('d', nd); stats.changed++; }
+        } else if (o.poly) {
+          const nums = (el.getAttribute('points') || '').match(/[-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?/g) || [], pts = [];
+          for (let i = 0; i + 1 < nums.length; i += 2) pts.push({x:+nums[i], y:+nums[i+1]});
+          if (pts.length < 3) continue;
+          const simp = rdp(pts, tol), str = simp.map(p => `${num(p.x, o.precision)},${num(p.y, o.precision)}`).join(' ');
+          stats.paths++; stats.before += pts.length; stats.after += simp.length; stats.bytesBefore += (el.getAttribute('points') || '').length; stats.bytesAfter += str.length;
+          if (simp.length < pts.length) { el.setAttribute('points', str); stats.changed++; }
+        }
+      }
+      return stats;
+    }
+
+    // ---- Optimizer UI (mounted into both tabs) ----
+    function mountOptimize(key) {
+      const isCode = key === 'to-code';
+      $(`optimize-slot-${key}`).innerHTML = `<div class="optimize-card">
+        <div class="section-label"><h4><i class="fa-solid fa-diagram-project" style="color:var(--green);margin-right:7px"></i>Optimize nodes</h4><span style="display:flex;align-items:center;gap:8px">Fewer points, same shape <button type="button" class="icon-btn" data-opt-info aria-haspopup="dialog" aria-label="Parameter info" title="Parameter info"><i class="fa-solid fa-circle-info"></i></button></span></div>
+        ${isCode ? `<label class="setting-title" style="margin-bottom:11px"><input id="opt-enable-${key}" type="checkbox"> Enable path optimization on the working SVG</label>` : ''}
+        <div class="opt-grid">
+          <label class="opt-field"><span>Tolerance <b id="opt-tol-val-${key}"></b></span><input id="opt-tol-${key}" type="range" min="1" max="100" value="10"></label>
+          <label class="opt-field"><span>Corner angle <b id="opt-corner-val-${key}"></b></span><input id="opt-corner-${key}" type="range" min="5" max="90" value="30"></label>
+          <label class="check-item"><input id="opt-ext-${key}" type="checkbox" checked><span><strong>Keep extrema nodes</strong><small>Nodes at horizontal and vertical extremes.</small></span></label>
+          <label class="check-item"><input id="opt-infl-${key}" type="checkbox" checked><span><strong>Keep inflection points</strong><small>Where a curve switches its bend direction.</small></span></label>
+          <label class="check-item"><input id="opt-poly-${key}" type="checkbox" checked><span><strong>Simplify polylines</strong><small>Thin out polyline and polygon points.</small></span></label>
+          <label class="check-item" style="grid-column:1/-1"><input id="opt-purify-${key}" type="checkbox" checked><span><strong>Purify while optimizing</strong><small>Strip headers, comments and editor metadata (CorelDRAW, Illustrator, Inkscape…), remove lock and protection attributes, unwrap groups that hold a single element. The SVG version and UTF-8 declaration are kept.</small></span></label>
+          <label class="opt-field"><span>Decimal precision</span><select id="opt-prec-${key}">${[1,2,3,4,5,6].map(n => `<option value="${n}"${n === 3 ? ' selected' : ''}>${n} decimals</option>`).join('')}</select></label>
+        </div>
+        ${isCode ? '' : `<div class="actions" style="margin-top:12px"><button type="button" class="button primary" id="opt-run-${key}"><i class="fa-solid fa-diagram-project"></i> Optimize code</button><button type="button" class="button subtle" id="opt-undo-${key}" disabled><i class="fa-solid fa-rotate-left"></i> Undo</button></div>`}
+        <p class="opt-stats" id="opt-stats-${key}" aria-live="polite"></p></div>`;
+      updateOptLabels(key); showOptStats(key, null);
+    }
+    function readOpt(key) {
+      return {tolPct:+$(`opt-tol-${key}`).value/100, corner:+$(`opt-corner-${key}`).value, extrema:$(`opt-ext-${key}`).checked, inflect:$(`opt-infl-${key}`).checked, poly:$(`opt-poly-${key}`).checked, purify:$(`opt-purify-${key}`).checked, precision:+$(`opt-prec-${key}`).value};
+    }
+    function updateOptLabels(key) {
+      $(`opt-tol-val-${key}`).textContent = `${(+$(`opt-tol-${key}`).value/100).toFixed(2)}% of diagonal`;
+      $(`opt-corner-val-${key}`).textContent = `${$(`opt-corner-${key}`).value}°`;
+    }
+    function showOptStats(key, s) {
+      const el = $(`opt-stats-${key}`);
+      if (!s) { el.textContent = key === 'to-code' ? 'Enable optimization to simplify paths. The imported source stays untouched; preview and export use the optimized version.' : 'Run the optimizer to simplify the paths in the editor. You can undo the result.'; return; }
+      const pct = s.before ? Math.round((1 - s.after/s.before)*100) : 0;
+      el.textContent = `Nodes ${s.before.toLocaleString()} → ${s.after.toLocaleString()} (−${pct}%) · ${s.changed} of ${s.paths} shapes changed · path data ${s.bytesBefore.toLocaleString()} → ${s.bytesAfter.toLocaleString()} characters${s.purged ? ` · purified ${s.purged} item(s)` : ''}`;
+    }
+    ['to-code', 'to-svg'].forEach(mountOptimize);
+    ['tol', 'corner', 'ext', 'infl', 'poly', 'purify', 'prec'].forEach(k => $(`opt-${k}-to-code`).addEventListener('input', () => { updateOptLabels('to-code'); if ($('opt-enable-to-code').checked) refreshSoon(); }));
+    ['tol', 'corner', 'ext', 'infl', 'poly', 'purify', 'prec'].forEach(k => $(`opt-${k}-to-svg`).addEventListener('input', () => updateOptLabels('to-svg')));
+    $('opt-enable-to-code').addEventListener('change', () => { if (state.sourceXml) refreshToCode(); else showOptStats('to-code', null); });
+    $('opt-run-to-svg').addEventListener('click', () => {
+      const src = $('svg-code-input').value;
+      try {
+        const doc = parseSVG(src), stats = optimizeDocument(doc, readOpt('to-svg'));
+        state.optUndo = src; $('svg-code-input').value = serializeSVG(doc); $('opt-undo-to-svg').disabled = false;
+        showOptStats('to-svg', stats); renderToSvg();
+        toast(stats.changed ? `Optimized ${stats.changed} shape(s): ${stats.before.toLocaleString()} → ${stats.after.toLocaleString()} nodes.` : 'Nothing to simplify at this tolerance.');
+      } catch (err) { toast(`Cannot optimize yet: ${err.message}`, true); }
+    });
+    $('opt-undo-to-svg').addEventListener('click', () => {
+      if (state.optUndo == null) return;
+      $('svg-code-input').value = state.optUndo; state.optUndo = null; $('opt-undo-to-svg').disabled = true; showOptStats('to-svg', null); renderToSvg(); toast('Optimization undone.');
+    });
+    {
+      const dlg = $('opt-info-dialog');
+      const open = () => { try { dlg.showModal(); } catch (_) { dlg.setAttribute('open', ''); } dlg.querySelector('.info-body').scrollTop = 0; };
+      document.addEventListener('click', e => { if (e.target.closest('[data-opt-info]')) open(); });
+      dlg.addEventListener('click', e => { if (e.target === dlg || e.target.closest('[data-close]')) { if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); } });
+    }
+    ['dragover', 'drop'].forEach(t => window.addEventListener(t, e => { if (e.dataTransfer && Array.from(e.dataTransfer.types || []).includes('Files')) e.preventDefault(); }));
+
+    // ===== Marker colors & size (both tabs) =====
+    const MK_DEFAULTS = {node:'#ffc96b', start:'#67dfb1', handle:'#65d7ec', hline:'#65d7ec', bounds:'#ff9f43', centroid:'#ff4f9a', boxes:'#b69bff', text:'#a3e635', bitmap:'#ff6b6b', outline:'#101626'};
+    const MK_LABELS = {node:'Anchor points', start:'Subpath start', handle:'Bézier handles', hline:'Handle lines', bounds:'Boundary box', centroid:'Centroid', boxes:'Element boxes', text:'Text boxes', bitmap:'Bitmap boxes', outline:'Marker outline'};
+    function markerPrefs(key) {
+      const o = {};
+      for (const k in MK_DEFAULTS) { const el = $(`mk-${k}-${key}`); o[k] = el ? el.value : MK_DEFAULTS[k]; }
+      const s = $(`mk-size-${key}`); o.size = s ? (+s.value) / 100 : 1; return o;
+    }
+    function applyLegendVars(key) { const p = markerPrefs(key), pane = $(`pane-${key}`); for (const k in MK_DEFAULTS) pane.style.setProperty(`--m-${k}`, p[k]); }
+    function mountMarkers(key) {
+      const slot = $(`marker-slot-${key}`);
+      slot.innerHTML = `<details class="fold"><summary><i class="fa-solid fa-palette"></i> Marker colors &amp; size</summary>
+        <div class="mk-grid">${Object.keys(MK_DEFAULTS).map(k => `<label class="mk-item"><input type="color" id="mk-${k}-${key}" value="${MK_DEFAULTS[k]}" aria-label="${MK_LABELS[k]} color"><span>${MK_LABELS[k]}</span></label>`).join('')}
+        <label class="opt-field" style="grid-column:1/-1"><span>Marker size <b id="mk-size-val-${key}">100%</b></span><input id="mk-size-${key}" type="range" min="50" max="250" value="100"></label></div>
+        <div class="actions" style="margin-top:10px"><button type="button" class="button subtle" id="mk-reset-${key}"><i class="fa-solid fa-rotate-left"></i> Reset colors</button></div></details>`;
+      const sync = () => { $(`mk-size-val-${key}`).textContent = `${$(`mk-size-${key}`).value}%`; applyLegendVars(key); if (viewers[key]) viewers[key].redraw(); };
+      slot.addEventListener('input', sync);
+      $(`mk-reset-${key}`).addEventListener('click', () => { for (const k in MK_DEFAULTS) $(`mk-${k}-${key}`).value = MK_DEFAULTS[k]; $(`mk-size-${key}`).value = 100; sync(); });
+    }
+    ['to-code', 'to-svg'].forEach(mountMarkers);
+
+    // ===== Per-element fill / stroke editor (Code to SVG) =====
+    Object.assign(state, {elStyles:{}, elSig:'', elDirty:false, elInfo:[], optUndo:state.optUndo ?? null});
+    const SHAPE_SEL = 'path,rect,circle,ellipse,line,polyline,polygon';
+    const shapeEls = root => Array.from(root.querySelectorAll(SHAPE_SEL)).filter(el => !inDefs(el) && !el.closest('[data-svg-area-overlay]') && !el.closest('foreignObject,foreignobject'));
+    const elementSignature = doc => shapeEls(doc.documentElement).map(e => e.localName + '|' + ['id','fill','stroke','stroke-width','style','class'].map(k => e.getAttribute(k) || '').join('|')).join('\n');
+    function applyElementStyles(doc) {
+      const map = state.elStyles; if (!Object.keys(map).length) return 0;
+      let n = 0;
+      shapeEls(doc.documentElement).forEach((el, i) => {
+        const s = map[i]; if (!s) return;
+        for (const k of ['fill', 'stroke']) if (s[k] != null) { el.setAttribute(k, s[k]); el.style.setProperty(k, s[k]); n++; }
+        if (s.sw != null && s.sw !== '') { el.setAttribute('stroke-width', s.sw); el.style.setProperty('stroke-width', `${s.sw}px`); n++; }
+      });
+      return n;
+    }
+    function rgbToInfo(c) {
+      const m = String(c || '').match(/rgba?\(([^)]+)\)/);
+      if (!m) return /^(none|)$/.test(String(c || '').trim()) ? {none:true, hex:'#000000', server:false} : {none:false, hex:'#000000', server:/url/i.test(c)};
+      const p = m[1].split(',').map(s => parseFloat(s));
+      if (p.length > 3 && p[3] === 0) return {none:true, hex:'#000000', server:false};
+      return {none:false, hex:'#' + p.slice(0, 3).map(v => Math.round(v).toString(16).padStart(2, '0')).join(''), server:false};
+    }
+    function elRowHTML(i, info) {
+      const paint = (k, label, p) => `<span class="el-ov"><label class="mini"><input type="checkbox" data-k="${k}-on" aria-label="Override ${label.toLowerCase()} of element ${i + 1}"> ${label}</label><span class="el-ctl" hidden><input type="color" data-k="${k}" value="${p.hex}" aria-label="${label} color of element ${i + 1}"${p.server ? ' title="Gradient or pattern paint. Pick a color to replace it."' : ''}><label class="mini"><input type="checkbox" data-k="${k}-none"${p.none ? ' checked' : ''}> none</label></span></span>`;
+      return `<div class="el-row" data-i="${i}"><span class="el-name"><b>${i + 1}</b> ${escapeXml(info.name)}</span>${paint('fill', 'Fill', info.fill)}${paint('stroke', 'Stroke', info.stroke)}<span class="el-ov"><label class="mini"><input type="checkbox" data-k="sw-on" aria-label="Override stroke width of element ${i + 1}"> Stroke width</label><span class="el-ctl" hidden><input type="number" min="0" step="0.5" data-k="sw" value="${fmt(info.sw)}" aria-label="Stroke width of element ${i + 1}"></span></span><button type="button" class="icon-btn" data-reset title="Reset this element"><i class="fa-solid fa-rotate-left"></i></button></div>`;
+    }
+    function buildElementList() {
+      const v = viewers['to-svg'], list = $('el-list');
+      if (!v || !v.svg) { list.innerHTML = ''; return; }
+      const els = shapeEls(v.svg), CAPN = 300; state.elInfo = [];
+      list.innerHTML = els.slice(0, CAPN).map((el, i) => {
+        const cs = getComputedStyle(el);
+        const info = {name:el.localName + (el.id ? '#' + el.id : ''), fill:rgbToInfo(cs.fill), stroke:rgbToInfo(cs.stroke), sw:parseFloat(cs.strokeWidth) || 1};
+        state.elInfo[i] = info; return elRowHTML(i, info);
+      }).join('') + (els.length > CAPN ? `<p class="opt-stats">Showing the first ${CAPN} of ${els.length} elements.</p>` : '');
+    }
+    function refreshElementList(doc) {
+      $('el-count').textContent = shapeEls(doc.documentElement).length;
+      if (state.elDirty) { state.elDirty = false; buildElementList(); }
+    }
+    $('elstyle-slot-to-svg').innerHTML = `<details class="fold" id="el-fold"><summary><i class="fa-solid fa-droplet"></i> Element styles <span class="pill" id="el-count">0</span></summary>
+      <p class="opt-stats" style="margin:0 0 10px">Tick <b>Fill</b>, <b>Stroke</b> or <b>Stroke width</b> on a shape to override it; the controls appear once ticked. Changes show in the preview and export; use <b>Apply to code</b> to write them into the editor.</p>
+      <div class="actions" style="margin-bottom:10px"><button type="button" class="button primary" id="el-apply"><i class="fa-solid fa-check"></i> Apply to code</button><button type="button" class="button subtle" id="el-reset"><i class="fa-solid fa-rotate-left"></i> Reset all</button></div>
+      <div class="el-list" id="el-list"></div></details>`;
+    {
+      const list = $('el-list');
+      list.addEventListener('input', e => {
+        const row = e.target.closest('.el-row'), k = e.target.dataset.k; if (!row || !k) return;
+        const i = +row.dataset.i, st = state.elStyles[i] || (state.elStyles[i] = {}), q = n => row.querySelector(`[data-k="${n}"]`);
+        const grp = k.replace(/-(on|none)$/, '');
+        if (k.endsWith('-on')) {
+          const on = e.target.checked; e.target.closest('.el-ov').querySelector('.el-ctl').hidden = !on;
+          if (!on) delete st[grp]; else st[grp] = grp === 'sw' ? q('sw').value : (q(grp + '-none').checked ? 'none' : q(grp).value);
+        } else if (grp === 'fill' || grp === 'stroke') {
+          if (k === grp) { st[grp] = e.target.value; q(grp + '-none').checked = false; }
+          else st[grp] = e.target.checked ? 'none' : q(grp).value;
+        } else if (k === 'sw') st.sw = e.target.value === '' ? null : e.target.value;
+        if (!Object.keys(st).length) delete state.elStyles[i];
+        row.classList.toggle('edited', !!state.elStyles[i]); renderToSvg();
+      });
+      list.addEventListener('click', e => {
+        const b = e.target.closest('[data-reset]'); if (!b) return;
+        const row = b.closest('.el-row'), i = +row.dataset.i; delete state.elStyles[i];
+        row.outerHTML = elRowHTML(i, state.elInfo[i]); renderToSvg();
+      });
+      list.addEventListener('mouseover', e => { const row = e.target.closest('.el-row'); if (row && viewers['to-svg']) viewers['to-svg'].setHl(+row.dataset.i + 1); });
+      list.addEventListener('mouseleave', () => { if (viewers['to-svg']) viewers['to-svg'].setHl(0); });
+      $('el-reset').addEventListener('click', () => { state.elStyles = {}; state.elDirty = true; renderToSvg(); });
+      $('el-apply').addEventListener('click', () => {
+        if (!Object.keys(state.elStyles).length) { toast('No element styles to apply yet.', true); return; }
+        try {
+          const src = $('svg-code-input').value, doc = parseSVG(src), n = applyElementStyles(doc);
+          state.optUndo = src; $('svg-code-input').value = serializeSVG(doc); $('opt-undo-to-svg').disabled = false;
+          state.elStyles = {}; state.elDirty = true; renderToSvg(); toast(`Applied ${n} style change(s) to the code.`);
+        } catch (err) { toast(`Cannot apply yet: ${err.message}`, true); }
+      });
+    }
+
+    // ===== Purify helpers used by the optimizer =====
+    const INHERIT_ATTRS = new Set(['fill','stroke','stroke-width','stroke-linecap','stroke-linejoin','stroke-miterlimit','stroke-dasharray','stroke-dashoffset','fill-opacity','stroke-opacity','fill-rule','clip-rule']);
+    function unwrapSingleGroups(doc) {
+      const root = doc.documentElement, refs = new Set(); let n = 0;
+      const collect = t => { for (const m of String(t).matchAll(/#([^\s"'()<>#,;{}]+)/g)) refs.add(m[1]); };
+      for (const el of [root, ...root.querySelectorAll('*')]) {
+        for (const a of el.attributes) if (/(?:^|:)href$/i.test(a.name) || /url\(/i.test(a.value) || a.name === 'style') collect(a.value);
+        if (el.localName.toLowerCase() === 'style') collect(el.textContent || '');
+      }
+      for (const g of Array.from(root.querySelectorAll('g')).reverse()) {
+        if (!g.parentNode || g.parentNode.nodeType !== 1) continue;
+        const kids = Array.from(g.childNodes).filter(c => c.nodeType === 1 || c.nodeType === 4 || (c.nodeType === 3 && c.nodeValue.trim()));
+        if (kids.length !== 1 || kids[0].nodeType !== 1) continue;
+        if (g.id && refs.has(g.id)) continue;
+        const child = kids[0], cstyle = child.getAttribute('style') || '', move = []; let ok = true;
+        for (const a of Array.from(g.attributes)) {
+          const nm = a.name.toLowerCase();
+          if (nm === 'id' || nm === 'xml:space') continue;
+          if (nm === 'transform' || nm === 'opacity') {
+            if (new RegExp(nm).test(cstyle) || (nm === 'opacity' && child.hasAttribute('opacity'))) { ok = false; break; }
+            move.push([nm, a.value]);
+          } else if (INHERIT_ATTRS.has(nm)) {
+            if (!child.hasAttribute(nm) && !new RegExp('(^|;)\\s*' + nm + '\\s*:').test(cstyle)) move.push([nm, a.value]);
+          } else { ok = false; break; }
+        }
+        if (!ok) continue;
+        for (const [nm, val] of move) child.setAttribute(nm, nm === 'transform' && child.hasAttribute('transform') ? `${val} ${child.getAttribute('transform')}` : val);
+        g.parentNode.replaceChild(child, g); n++;
+      }
+      return n;
+    }
+    function dropUnusedNamespaces(root) {
+      const used = new Set(); let n = 0;
+      for (const el of [root, ...root.querySelectorAll('*')]) {
+        used.add(el.namespaceURI);
+        for (const a of el.attributes) if (a.namespaceURI && a.namespaceURI !== 'http://www.w3.org/2000/xmlns/') used.add(a.namespaceURI);
+      }
+      for (const a of Array.from(root.attributes)) if (/^xmlns:/i.test(a.name) && !used.has(a.value)) { root.removeAttributeNode(a); n++; }
+      return n;
+    }
+
+    function getOptions() {
+      return {
+        meta:$('purify-meta').checked,
+        locks:$('purify-locks').checked,
+        data:$('purify-data').checked,
+        empty:$('purify-empty').checked,
+        stroke:$('override-stroke').checked,
+        strokeWidth:Number($('stroke-width').value),
+        fill:$('override-fill').checked,
+        fillColor:$('fill-color').value
+      };
+    }
+    function updateStrokeControls() {
+      $('stroke-width').disabled=!$('override-stroke').checked;$('stroke-width').closest('.slider-line').hidden=!$('override-stroke').checked;
+      $('stroke-value').textContent=`${$('stroke-width').value} px`;
+    }
+    function updateFillControls() {
+      $('fill-color').disabled=!$('override-fill').checked;$('fill-color').closest('.color-wrap').hidden=!$('override-fill').checked;
+      $('fill-hex').textContent=$('fill-color').value.toUpperCase();
+    }
+    function processedSource() {
+      if(!state.sourceXml) return null;
+      const parsed=parseSVG(state.sourceXml);
+      const safe=sanitizeDocument(parsed);
+      let purgeCount=0;
+      if(state.purgeApplied) purgeCount=applyPurification(safe.doc,{meta:$('purify-meta').checked,locks:$('purify-locks').checked,data:$('purify-data').checked,empty:$('purify-empty').checked});
+      let optStats=null;
+      if($('opt-enable-to-code').checked)optStats=optimizeDocument(safe.doc,readOpt('to-code'));
+      const opts=getOptions();
+      const overrideCount=applyOverrides(safe.doc,{stroke:opts.stroke,strokeWidth:opts.strokeWidth,fill:opts.fill,fillColor:opts.fillColor});
+      return {doc:safe.doc,securityRemovals:safe.removals,purgeCount,overrideCount,optStats};
+    }
+    function displayFileInfo(doc) {
+      const root=doc.documentElement; const vb=getViewBox(root);
+      const dimensions=`${Math.round(vb[2]*100)/100} × ${Math.round(vb[3]*100)/100} units`;
+      $('source-file-meta').textContent=`${formatBytes(state.sourceSize)} · ${dimensions}`;
+    }
+    function formatBytes(bytes) {
+      if(!Number.isFinite(bytes)||bytes<=0)return 'SVG';
+      if(bytes<1024)return `${bytes} B`;
+      if(bytes<1024*1024)return `${(bytes/1024).toFixed(1)} KB`;
+      return `${(bytes/(1024*1024)).toFixed(2)} MB`;
+    }
+    function displayAnalysis(prefix, analysis, doc, removals) {
+      $(`node-count-${prefix}`).textContent=analysis.anchors.length;
+      $(`handle-count-${prefix}`).textContent=analysis.handles.length;
+      $(`viewbox-${prefix}`).textContent=(doc.documentElement.getAttribute('viewBox')||'—').replace(/\s+/g,' ');
+      $(`drawables-${prefix}`).textContent=analysis.drawableCount;
+      $(`security-${prefix}`).textContent=removals?`${removals} removed`:'Clean';
+    }
+    function setNote(id, message, kind='') {
+      const el=$(id);el.className='preview-note';el.replaceChildren();
+      if(kind==='ok'||kind==='warn'){
+        const span=document.createElement('span');span.className=kind;
+        const icon=document.createElement('i');icon.className=kind==='ok'?'fa-solid fa-circle-check':'fa-solid fa-shield-halved';
+        span.append(icon,document.createTextNode(` ${message}`));el.appendChild(span);
+      } else el.textContent=message;
+    }
+    let refreshTimer=0;const refreshSoon=()=>{clearTimeout(refreshTimer);refreshTimer=setTimeout(refreshToCode,45);};
+    function refreshToCode() {
+      if(!state.sourceXml){
+        $('code-output').value='';$('copy-output').disabled=true;$('download-output').disabled=true;
+        $('source-file-name').textContent='No file loaded';$('source-file-meta').textContent='SVG · Waiting for input';
+        clearPreview($('preview-stage-to-code'));$('empty-to-code').hidden=false;
+        $('node-count-to-code').textContent='0';$('handle-count-to-code').textContent='0';$('drawables-to-code').textContent='0';$('viewbox-to-code').textContent='—';$('security-to-code').textContent='Ready';
+        setNote('preview-note-to-code','Anchor analysis appears after an SVG is loaded.');
+        return;
+      }
+      try {
+        const result=processedSource(); state.toCodeDoc=result.doc;
+        const analysis=analyzeGeometry(result.doc);
+        $('code-output').value=serializeSVG(result.doc);
+        $('copy-output').disabled=false;$('download-output').disabled=false;$('empty-to-code').hidden=true;
+        makePreview($('preview-stage-to-code'),result.doc,analysis,{nodes:$('show-nodes-to-code').checked,handles:$('show-handles-to-code').checked});
+        displayAnalysis('to-code',analysis,result.doc,result.securityRemovals);
+        displayFileInfo(result.doc);showOptStats('to-code',result.optStats);
+        if(result.securityRemovals)setNote('preview-note-to-code',`Safety filter removed ${result.securityRemovals} unsafe element, attribute, or comment item(s).`,'warn');
+        else if(state.purgeApplied)setNote('preview-note-to-code',`Purification applied: ${result.purgeCount} cleanup change(s); ${result.overrideCount} appearance override(s).`,'ok');
+        else setNote('preview-note-to-code',`${analysis.anchors.length} geometry anchors and ${analysis.handles.length} Bézier control points detected.`,'ok');
+      } catch(err) {
+        $('code-output').value='';$('copy-output').disabled=true;$('download-output').disabled=true;
+        clearPreview($('preview-stage-to-code'));$('empty-to-code').hidden=false;
+        $('empty-to-code').querySelector('strong').textContent='SVG could not be processed';$('empty-to-code').querySelector('span').textContent=err.message;
+        setNote('preview-note-to-code',err.message,'warn');
+      }
+    }
+    function loadSourceText(text, name='Imported SVG', size=0) {
+      try {
+        parseSVG(text); // Validate before replacing the current source.
+        resetView('to-code');state.sourceXml=text;state.sourceName=name;state.sourceSize=size;state.purgeApplied=false;
+        $('source-file-name').textContent=name;
+        $('empty-to-code').querySelector('strong').textContent='No SVG loaded yet';
+        $('empty-to-code').querySelector('span').textContent='Import an SVG file to preview its artwork, anchors, and Bézier controls.';
+        refreshToCode();
+        toast(`Loaded ${name}.`);
+        return true;
+      } catch(err) { toast(err.message || 'This file is not a valid SVG document.',true);return false; }
+    }
+
+    $('browse-btn').addEventListener('click',e=>{e.stopPropagation();$('svg-file').click();});
+    $('svg-file').addEventListener('change',async e=>{
+      const file=e.target.files?.[0];if(!file)return;
+      try{const text=await file.text();if(loadSourceText(text,file.name,file.size))$('svg-file').value='';}catch(err){toast('Could not read this file.',true);}
+    });
+    const dropzone=$('dropzone');
+    ['dragenter','dragover'].forEach(type=>dropzone.addEventListener(type,e=>{e.preventDefault();dropzone.classList.add('dragover');}));
+    ['dragleave','drop'].forEach(type=>dropzone.addEventListener(type,e=>{e.preventDefault();dropzone.classList.remove('dragover');}));
+    dropzone.addEventListener('drop',async e=>{const file=e.dataTransfer?.files?.[0];if(!file)return;if(!/\.svg$/i.test(file.name)&&file.type!=='image/svg+xml'){toast('Please drop an SVG file.',true);return;}try{const text=await file.text();loadSourceText(text,file.name,file.size);}catch(_){toast('Could not read this file.',true);}});
+
+    $('apply-purify').addEventListener('click',()=>{
+      if(!state.sourceXml){toast('Import an SVG before applying purification.',true);return;}
+      state.purgeApplied=true;refreshToCode();toast('Purification options applied to the working SVG.');
+    });
+    $('restore-source').addEventListener('click',()=>{
+      if(!state.sourceXml){toast('There is no source to restore.',true);return;}
+      state.purgeApplied=false;$('override-stroke').checked=false;$('override-fill').checked=false;$('opt-enable-to-code').checked=false;showOptStats('to-code',null);$('stroke-width').value='2';$('fill-color').value='#8872ff';updateStrokeControls();updateFillControls();refreshToCode();toast('Source restored; appearance overrides are off.');
+    });
+    ['purify-meta','purify-locks','purify-data','purify-empty'].forEach(id=>$(id).addEventListener('change',()=>{if(state.purgeApplied)refreshToCode();}));
+    $('override-stroke').addEventListener('change',()=>{updateStrokeControls();refreshToCode();});
+    $('stroke-width').addEventListener('input',()=>{updateStrokeControls();refreshSoon();});
+    $('override-fill').addEventListener('change',()=>{updateFillControls();refreshToCode();});
+    $('fill-color').addEventListener('input',()=>{updateFillControls();refreshSoon();});
+
+    function downloadText(text, filename, type='image/svg+xml;charset=utf-8') {
+      const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.style.display='none';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);
+    }
+    async function copyText(text, fallbackArea) {
+      try { if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);}else{fallbackArea.focus();fallbackArea.select();const ok=document.execCommand('copy');if(!ok)throw new Error('Clipboard command failed');}toast('SVG XML copied to clipboard.'); }
+      catch(_){fallbackArea.focus();fallbackArea.select();toast('Select the text and copy it with your keyboard.',true);}
+    }
+    $('toggle-output').addEventListener('click',()=>{const body=$('output-body'),open=body.hidden;body.hidden=!open;$('toggle-output').setAttribute('aria-expanded',String(open));});
+    $('copy-output').addEventListener('click',()=>copyText($('code-output').value,$('code-output')));
+    $('download-output').addEventListener('click',()=>{if(!state.toCodeDoc)return;const name=(state.sourceName||'svg-area').replace(/\.svg$/i,'').replace(/[^a-z0-9._-]+/gi,'-');downloadText(serializeSVG(state.toCodeDoc),`${name}-clean.svg`);toast('Processed SVG download started.');});
+
+    // XML Auto-Repair: deliberately conservative, review-first corrections.
+    // It never writes into the editor unless the user clicks Apply repaired XML.
+    const REPAIR_LEAF_TAGS = new Set([
+      'path','rect','circle','ellipse','line','polyline','polygon','image','use','stop',
+      'feBlend','feColorMatrix','feComponentTransfer','feComposite','feConvolveMatrix',
+      'feDiffuseLighting','feDisplacementMap','feDropShadow','feFlood','feGaussianBlur',
+      'feImage','feMergeNode','feMorphology','feOffset','fePointLight','feSpecularLighting',
+      'feSpotLight','feTile','feTurbulence','mpath'
+    ]);
+    const XML_BUILTIN_ENTITIES = /^(?:amp|lt|gt|quot|apos)$/;
+    const LEGACY_TEXT_ENTITIES = {nbsp:'\u00A0',copy:'\u00A9',reg:'\u00AE',trade:'\u2122',mdash:'\u2014',ndash:'\u2013',hellip:'\u2026',bull:'\u2022',middot:'\u00B7',rsquo:'\u2019',lsquo:'\u2018',rdquo:'\u201D',ldquo:'\u201C',times:'\u00D7',euro:'\u20AC',pound:'\u00A3',yen:'\u00A5',cent:'\u00A2'};
+
+    function normalizeRepairInput(source, changes) {
+      let text = String(source == null ? '' : source).replace(/^\uFEFF/, '').trim();
+      if (!text) throw new Error('Paste or import SVG XML before analyzing repairs.');
+      if (text.length > 20_000_000) throw new Error('This SVG is too large to repair in the browser workspace.');
+      const fenced = text.match(/^```(?:svg|xml|html)?[ \t]*\r?\n([\s\S]*?)\r?\n```[ \t]*$/i);
+      if (fenced) { text = fenced[1].trim(); changes.push('Removed the surrounding Markdown code fence.'); }
+      const hadDoctype = /<!DOCTYPE\b/i.test(text);
+      if (hadDoctype) {
+        try { text = stripDoctype(text); changes.push('Removed the DOCTYPE declaration and safely handled supported legacy entities.'); }
+        catch (_) {
+          const rootStart = findSvgRootStart(text);
+          if (rootStart >= 0) {
+            text = text.slice(0, text.search(/<!DOCTYPE\b/i)) + text.slice(rootStart);
+            changes.push('Removed an unfinished DOCTYPE declaration before the SVG root.');
+          } else {
+            throw new Error('The DOCTYPE is unfinished and no SVG root was found to preserve safely.');
+          }
+        }
+      }
+      return text;
+    }
+
+    function repairBareEntities(text, changes) {
+      let out = '', changed = 0;
+      for (let i = 0; i < text.length;) {
+        if (text.startsWith('<!--', i)) {
+          const end = text.indexOf('-->', i + 4);
+          if (end < 0) { out += text.slice(i) + '-->'; changes.push('Closed an unfinished XML comment at end of input.'); break; }
+          out += text.slice(i, end + 3); i = end + 3; continue;
+        }
+        if (text.startsWith('<![CDATA[', i)) {
+          const end = text.indexOf(']]>', i + 9);
+          if (end < 0) { out += text.slice(i) + ']]>'; changes.push('Closed an unfinished CDATA section at end of input.'); break; }
+          out += text.slice(i, end + 3); i = end + 3; continue;
+        }
+        if (text.startsWith('<?', i)) {
+          const end = text.indexOf('?>', i + 2);
+          if (end < 0) { out += text.slice(i) + '?>'; changes.push('Closed an unfinished processing instruction at end of input.'); break; }
+          out += text.slice(i, end + 2); i = end + 2; continue;
+        }
+        const ch = text[i];
+        if (ch === '&') {
+          const tail = text.slice(i + 1);
+          const numeric = tail.match(/^#(?:\d+|x[\da-f]+);/i);
+          const named = tail.match(/^([A-Za-z_:][\w:.-]*);/);
+          if (numeric || (named && XML_BUILTIN_ENTITIES.test(named[1]))) {
+            const token = numeric ? numeric[0] : named[0];
+            out += '&' + token; i += token.length + 1; continue;
+          }
+          if (named && Object.prototype.hasOwnProperty.call(LEGACY_TEXT_ENTITIES, named[1])) {
+            out += LEGACY_TEXT_ENTITIES[named[1]];
+            changes.push(`Converted the legacy &${named[1]}; character entity to Unicode.`);
+            i += named[0].length + 1; continue;
+          }
+          out += '&amp;'; changed++; i++; continue;
+        }
+        out += ch; i++;
+      }
+      if (changed) changes.push(`Escaped ${changed} bare or undeclared ampersand reference${changed === 1 ? '' : 's'} so the XML parser can read the text safely.`);
+      return out;
+    }
+
+    function findTagEnd(text, start) {
+      let quote = '';
+      for (let i = start + 1; i < text.length; i++) {
+        const ch = text[i];
+        if (quote) { if (ch === quote) quote = ''; continue; }
+        if (ch === '"' || ch === "'") { quote = ch; continue; }
+        if (ch === '>') return { end: i, quote: '' };
+      }
+      return { end: -1, quote };
+    }
+
+    function repairUnquotedAttrs(tag, changes) {
+      // Only operates on opening-tag attribute text, not tag names or text nodes.
+      const parsed = tag.match(/^<\s*([A-Za-z_:][\w:.-]*)([\s\S]*?)>$/);
+      if (!parsed || /^<\s*\//.test(tag) || /^<\s*[!?]/.test(tag)) return tag;
+      const name = parsed[1];
+      let attrs = parsed[2], fixed = 0;
+      // Quote simple unquoted values such as width=100, fill=#fff, or id=shape-1.
+      // Values containing whitespace or XML delimiters are intentionally left alone.
+      attrs = attrs.replace(/(\s+[A-Za-z_:][\w:.-]*\s*=\s*)([^\s"'`=<>]+)(?=\s|\/?$)/g, (whole, left, value) => {
+        if (value.startsWith('"') || value.startsWith("'")) return whole;
+        fixed++; return left + '"' + value + '"';
+      });
+      if (fixed) changes.push(`Added quotes to ${fixed} unquoted attribute value${fixed === 1 ? '' : 's'} on <${name}>.`);
+      return '<' + name + attrs + '>';
+    }
+
+    function repairTagStructure(text, changes) {
+      let out = '', i = 0, rootOriginalName = null, rootCaseChanged = false;
+      const stack = [];
+      const names = new Set();
+      function emitClosing(name, reason) {
+        out += `</${name}>`;
+        changes.push(reason || `Inserted a missing </${name}> closing tag.`);
+      }
+      while (i < text.length) {
+        if (text.startsWith('<!--', i)) {
+          const end = text.indexOf('-->', i + 4);
+          if (end < 0) { out += text.slice(i) + '-->'; changes.push('Closed an unfinished XML comment at end of input.'); break; }
+          out += text.slice(i, end + 3); i = end + 3; continue;
+        }
+        if (text.startsWith('<![CDATA[', i)) {
+          const end = text.indexOf(']]>', i + 9);
+          if (end < 0) { out += text.slice(i) + ']]>'; changes.push('Closed an unfinished CDATA section at end of input.'); break; }
+          out += text.slice(i, end + 3); i = end + 3; continue;
+        }
+        if (text.startsWith('<?', i)) {
+          const end = text.indexOf('?>', i + 2);
+          if (end < 0) { out += text.slice(i) + '?>'; changes.push('Closed an unfinished processing instruction at end of input.'); break; }
+          out += text.slice(i, end + 2); i = end + 2; continue;
+        }
+        if (text[i] !== '<') { out += text[i++]; continue; }
+        if (text.startsWith('<!', i)) {
+          const found = findTagEnd(text, i);
+          if (found.end < 0) {
+            out += text.slice(i); changes.push('Left an unfinished XML declaration untouched because its intent could not be inferred safely.'); break;
+          }
+          out += text.slice(i, found.end + 1); i = found.end + 1; continue;
+        }
+        const found = findTagEnd(text, i);
+        let token;
+        if (found.end < 0) {
+          const tail = text.slice(i);
+          if (!/^<\s*\/?[A-Za-z_:][\w:.-]*/.test(tail)) { out += tail; break; }
+          // Repair an incomplete final tag only if we can close its outstanding quote deterministically.
+          let completed = tail;
+          if (found.quote) completed += found.quote;
+          completed += '>';
+          changes.push(found.quote ? 'Closed an unfinished attribute quote and tag at end of input.' : 'Added the missing > to the final XML tag.');
+          token = completed; i = text.length;
+        } else { token = text.slice(i, found.end + 1); i = found.end + 1; }
+        token = repairUnquotedAttrs(token, changes);
+        const closing = token.match(/^<\s*\/\s*([A-Za-z_:][\w:.-]*)\s*>$/);
+        const opening = token.match(/^<\s*([A-Za-z_:][\w:.-]*)([\s\S]*?)>$/);
+        if (closing) {
+          let name = closing[1];
+          if (rootOriginalName && name === rootOriginalName && rootCaseChanged) name = 'svg';
+          const index = stack.map(entry => entry.name).lastIndexOf(name);
+          if (index < 0) {
+            changes.push(`Removed unmatched closing tag </${name}>.`);
+            continue;
+          }
+          while (stack.length - 1 > index) {
+            const missing = stack.pop();
+            emitClosing(missing.name, `Inserted </${missing.name}> before </${name}> to repair mismatched nesting.`);
+          }
+          stack.pop(); out += `</${name}>`; continue;
+        }
+        if (!opening) { out += token; continue; }
+        let name = opening[1], attrs = opening[2];
+        const isClosingLike = token.startsWith('</');
+        if (isClosingLike) { out += token; continue; }
+        if (stack.length === 0 && rootOriginalName === null) {
+          rootOriginalName = name;
+          if (name.toLowerCase() === 'svg' && name !== 'svg') {
+            name = 'svg'; rootCaseChanged = true;
+            token = token.replace(/^<\s*[A-Za-z_:][\w:.-]*/, '<svg');
+            changes.push('Normalized the root element name to lowercase <svg>.');
+          }
+        }
+        const isSelfClosing = /\/\s*>$/.test(token);
+        const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const hasExplicitClose = new RegExp('<\\/\\s*' + escapedName + '\\s*>').test(text.slice(i));
+        if (!isSelfClosing && REPAIR_LEAF_TAGS.has(name) && !hasExplicitClose) {
+          // SVG graphics primitives and filter primitives cannot have child elements.
+          // Close only when no matching end tag exists later, preserving valid paired markup.
+          token = token.replace(/>$/, ' />');
+          changes.push(`Self-closed the leaf element <${name}> because no matching closing tag was found.`);
+          out += token; continue;
+        }
+        out += token;
+        names.add(name);
+        if (!isSelfClosing) stack.push({ name });
+      }
+      while (stack.length) {
+        const missing = stack.pop();
+        emitClosing(missing.name, `Appended the missing </${missing.name}> closing tag at end of input.`);
+      }
+      return out;
+    }
+
+    function findSvgRootStart(text) {
+      for (let i = 0; i < text.length;) {
+        if (text.startsWith('<!--', i)) { const end = text.indexOf('-->', i + 4); if (end < 0) return -1; i = end + 3; continue; }
+        if (text.startsWith('<![CDATA[', i)) { const end = text.indexOf(']]>', i + 9); if (end < 0) return -1; i = end + 3; continue; }
+        if (text.startsWith('<?', i)) { const end = text.indexOf('?>', i + 2); if (end < 0) return -1; i = end + 2; continue; }
+        if (text[i] !== '<') { i++; continue; }
+        if (text.startsWith('<!', i)) { const found = findTagEnd(text, i); if (found.end < 0) return -1; i = found.end + 1; continue; }
+        const found = findTagEnd(text, i);
+        if (found.end < 0) return -1;
+        const token = text.slice(i, found.end + 1);
+        const opening = token.match(/^<\s*([A-Za-z_:][\w:.-]*)\b/);
+        if (opening && opening[1].toLowerCase() === 'svg' && !/^<\s*\//.test(token)) return i;
+        i = found.end + 1;
+      }
+      return -1;
+    }
+
+    function repairSvgMarkup(source) {
+      const changes = [];
+      let text = normalizeRepairInput(source, changes);
+      const extracted = extractSvgBlock(text);
+      if (extracted !== text) { text = extracted; changes.push('Removed text outside the <svg> … </svg> block.'); }
+      text = repairBareEntities(text, changes);
+      text = repairTagStructure(text, changes);
+
+      // Check XML well-formedness before touching attributes. This avoids silently
+      // rewriting a document that still contains an error the conservative rules missed.
+      const prefixFix = addMissingPrefixes(text);
+      if (prefixFix.added.length) { text = prefixFix.text; changes.push(`Declared the missing namespace prefix${prefixFix.added.length === 1 ? '' : 'es'} on the root: ${prefixFix.added.join(', ')}.`); }
+      const rawDoc = new DOMParser().parseFromString(text, 'image/svg+xml');
+      const rawError = getXmlParserError(rawDoc);
+      if (rawError) throw new Error(rawError.slice(0, 230));
+      const rawRoot = rawDoc.documentElement;
+      if (!rawRoot || String(rawRoot.localName || rawRoot.nodeName).toLowerCase() !== 'svg') {
+        throw new Error('The repaired markup still needs a complete <svg> root element. No wrapper was added because its canvas bounds cannot be inferred safely.');
+      }
+
+      // Keep the original XML prolog, comments, formatting, and artwork attributes.
+      // Only repair the namespace declaration when it is missing or incorrect.
+      const rootStart = findSvgRootStart(text);
+      if (rootStart < 0) throw new Error('Could not locate the actual <svg> root outside comments and processing instructions.');
+      const rootEndInfo = findTagEnd(text, rootStart);
+      if (rootEndInfo.end < 0) throw new Error('The opening <svg> tag is still incomplete after repair.');
+      let rootTag = text.slice(rootStart, rootEndInfo.end + 1);
+      const namespaceAttr = rootTag.match(/\sxmlns\s*=\s*(["'])([\s\S]*?)\1/i);
+      if (!namespaceAttr) {
+        const insertionPoint = /\/\s*>$/.test(rootTag) ? rootTag.lastIndexOf('/') : rootTag.length - 1;
+        rootTag = rootTag.slice(0, insertionPoint).replace(/\s+$/, '') + ` xmlns="${SVG_NS}"` + rootTag.slice(insertionPoint);
+        text = text.slice(0, rootStart) + rootTag + text.slice(rootEndInfo.end + 1);
+        changes.push('Added the missing SVG namespace declaration.');
+      } else if (namespaceAttr[2] !== SVG_NS) {
+        const correctedTag = rootTag.replace(namespaceAttr[0], ` xmlns="${SVG_NS}"`);
+        text = text.slice(0, rootStart) + correctedTag + text.slice(rootEndInfo.end + 1);
+        changes.push('Corrected the root xmlns value to the standard SVG namespace.');
+      }
+
+      // Validate the exact proposal. parseSVG also normalizes defaults in its in-memory
+      // document for preview, but those optional attributes are not injected into source.
+      parseSVG(text);
+      return { original: String(source), proposed: text, changes: [...new Set(changes)] };
+    }
+
+    function showRepairProposal(proposal) {
+      state.repairProposal = proposal;
+      const panel = $('repair-panel');
+      panel.hidden = false;
+      $('repair-before').value = proposal.original;
+      $('repair-after').value = proposal.proposed;
+      $('repair-changes').replaceChildren();
+      $('repair-count').textContent = `${proposal.changes.length} CHANGE${proposal.changes.length === 1 ? '' : 'S'}`;
+      $('repair-title').textContent = proposal.changes.length ? 'XML Auto-Repair Proposal' : 'No Repair Needed';
+      $('repair-subtitle').textContent = proposal.changes.length ? 'Review the proposed markup before applying it.' : 'The input already parses as SVG. No changes are recommended.';
+      $('repair-summary').textContent = proposal.changes.length
+        ? `${proposal.changes.length} proposed correction${proposal.changes.length === 1 ? '' : 's'} were prepared. The editor has not been changed; compare both versions and apply only if the result looks right.`
+        : 'The input appears to be valid SVG XML. Nothing was changed.';
+      proposal.changes.slice(0, 24).forEach(change => {
+        const li = document.createElement('li'); li.textContent = change; $('repair-changes').appendChild(li);
+      });
+      if (proposal.changes.length > 24) {
+        const li = document.createElement('li'); li.textContent = `…and ${proposal.changes.length - 24} additional recorded changes.`; $('repair-changes').appendChild(li);
+      }
+      $('repair-changes').hidden = proposal.changes.length === 0;
+      $('apply-repair').disabled = proposal.changes.length === 0;
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    $('analyze-repair').addEventListener('click', () => {
+      try {
+        const proposal = repairSvgMarkup($('svg-code-input').value);
+        showRepairProposal(proposal);
+        if (proposal.changes.length) toast(`Prepared ${proposal.changes.length} repair change(s). Review them before applying.`);
+        else toast('The SVG is already valid. No repair was needed.');
+      } catch (err) {
+        state.repairProposal = null;
+        $('repair-panel').hidden = false;
+        $('repair-title').textContent = 'No Safe Repair Proposal';
+        $('repair-subtitle').textContent = 'The issue could not be corrected confidently by the automatic rules.';
+        $('repair-count').textContent = 'REVIEW NEEDED';
+        $('repair-summary').textContent = err && err.message ? err.message : 'The source could not be repaired safely.';
+        $('repair-changes').replaceChildren();
+        const li = document.createElement('li'); li.textContent = 'No changes were applied. Review the source markup manually or correct the reported syntax issue.'; $('repair-changes').appendChild(li);
+        $('repair-changes').hidden = false;
+        $('repair-before').value = $('svg-code-input').value;
+        $('repair-after').value = '';
+        $('apply-repair').disabled = true;
+        $('repair-panel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        toast('No safe automatic repair could be proposed.', true);
+      }
+    });
+    $('cancel-repair').addEventListener('click', () => {
+      $('repair-panel').hidden = true; state.repairProposal = null;
+    });
+    $('apply-repair').addEventListener('click', () => {
+      const proposal = state.repairProposal;
+      if (!proposal || $('svg-code-input').value !== proposal.original) {
+        $('repair-panel').hidden = true; state.repairProposal = null;
+        toast('The editor changed after analysis. Analyze the current source again.', true); return;
+      }
+      $('svg-code-input').value = proposal.proposed;
+      state.repairProposal = null; $('repair-panel').hidden = true;
+      renderToSvg();
+      toast('Repaired XML applied to the editor. Review the preview and export when ready.');
+    });
+
+    function renderToSvg() {
+      clearTimeout(state.parseTimer);
+      state.parseTimer=setTimeout(()=>{
+        const source=$('svg-code-input').value;
+        const stage=$('preview-stage-to-svg');
+        if(!source.trim()){
+          clearPreview(stage);$('empty-to-svg').hidden=false;$('error-to-svg').hidden=true;
+          $('export-code-svg').disabled=true;$('node-count-to-svg').textContent='0';$('handle-count-to-svg').textContent='0';$('viewbox-to-svg').textContent='—';$('drawables-to-svg').textContent='0';$('security-to-svg').textContent='Ready';$('code-status').textContent='EMPTY';state.toSvgDoc=null;
+          setNote('preview-note-to-svg','Paste SVG XML or load the sample to see anchor analysis.');return;
+        }
+        try {
+          const parsed=parseSVG(source);const safe=sanitizeDocument(parsed);const doc=safe.doc;
+          const elSig=elementSignature(doc);if(elSig!==state.elSig){state.elSig=elSig;state.elStyles={};state.elDirty=true;}
+          applyElementStyles(doc);
+          const analysis=analyzeGeometry(doc);state.toSvgDoc=doc;state.lastToSvgMarkup=serializeSVG(doc);state.lastToSvgRemovals=safe.removals;
+          $('empty-to-svg').hidden=true;$('error-to-svg').hidden=true;$('export-code-svg').disabled=false;$('code-status').textContent='VALID SVG';
+          makePreview(stage,doc,analysis);refreshElementList(doc);
+          displayAnalysis('to-svg',analysis,doc,safe.removals);
+          if(safe.removals)setNote('preview-note-to-svg',`Preview safety filter removed ${safe.removals} unsafe element, attribute, or comment item(s). Export includes the safe version.`,'warn');
+          else setNote('preview-note-to-svg',`${analysis.anchors.length} geometry anchors and ${analysis.handles.length} Bézier control points detected.`,'ok');
+        } catch(err) {
+          clearPreview(stage);$('empty-to-svg').hidden=true;$('error-to-svg').hidden=false;
+          $('error-message').textContent=err.message || 'Check the XML syntax and make sure the root element is <svg>.';
+          $('export-code-svg').disabled=true;$('code-status').textContent='INVALID XML';state.toSvgDoc=null;
+          $('node-count-to-svg').textContent='0';$('handle-count-to-svg').textContent='0';$('viewbox-to-svg').textContent='—';$('drawables-to-svg').textContent='0';$('security-to-svg').textContent='—';
+          setNote('preview-note-to-svg','Correct the XML error to restore the preview and export.','warn');
+        }
+      },140);
+    }
+    $('svg-code-input').addEventListener('input',()=>{
+      // Hide both a stale proposal and any prior "could not repair" message as soon as
+      // the user edits the source, so the panel never describes older code.
+      if (!$('repair-panel').hidden) {
+        state.repairProposal = null;
+        $('repair-panel').hidden = true;
+      }
+      renderToSvg();
+    });
+    $('load-sample').addEventListener('click',()=>{$('svg-code-input').value=SAMPLE;renderToSvg();toast('Sample SVG loaded.');});
+    $('clear-code').addEventListener('click',()=>{if(!$('svg-code-input').value.trim())return;$('svg-code-input').value='';renderToSvg();toast('Code editor cleared.');});
+    $('format-code').addEventListener('click',()=>{
+      try{const parsed=parseSVG($('svg-code-input').value);const safe=sanitizeDocument(parsed);$('svg-code-input').value=serializeSVG(safe.doc);renderToSvg();toast('XML formatted and normalized.');}
+      catch(err){toast(`Cannot format yet: ${err.message}`,true);}
+    });
+    $('export-code-svg').addEventListener('click',()=>{if(!state.toSvgDoc)return;downloadText(state.lastToSvgMarkup||serializeSVG(state.toSvgDoc),'svg-area-export.svg');toast('Safe SVG export started.');});
+
+    updateStrokeControls();updateFillControls();
+    $('svg-code-input').value=SAMPLE;
+    renderToSvg();
+  })();
+  </script>
+</body>
+</html>
